@@ -1,8 +1,8 @@
 package com.bin.design.drivingschool.controller;
 
-        import org.springframework.stereotype.Controller;
-        import org.springframework.web.bind.annotation.RequestMapping;
-        import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @ResponseBody
@@ -10,7 +10,7 @@ package com.bin.design.drivingschool.controller;
 public class TestController {
 
     @RequestMapping(value = "begin")
-    public String test(){
+    public String test() {
         return "helloWorld";
     }
 }
