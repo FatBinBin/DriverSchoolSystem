@@ -21,18 +21,18 @@
         </javaTypeResolver>
 
         <!-- 实体类生成的位置 -->
-        <javaModelGenerator targetPackage="com.bin.design.drivingschool.mapper" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.bin.design.drivingschool.entity" targetProject="src/main/java">
             <property name="enableSubPackages" value="false"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <!-- *Mapper.xml 文件的位置 -->
-        <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="com.bin.design.drivingschool.mapper" targetProject="src/main/resources">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
         <!-- Mapper 接口文件的位置 -->
-        <javaClientGenerator targetPackage="com.bin.design.drivingschool.service" targetProject="src/main/java" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="com.bin.design.drivingschool.mapper" targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
