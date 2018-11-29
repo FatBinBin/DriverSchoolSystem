@@ -1,0 +1,41 @@
+package com.bin.design.drivingschool.controller;
+
+import com.bin.design.drivingschool.entity.DssCoachInfo;
+import com.bin.design.drivingschool.service.CoachInfoService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * @author huangyubin
+ * @version 2018/11/29
+ * @since
+ */
+@RestController
+@RequestMapping("/coaches")
+@Slf4j
+public class CoachController {
+
+	@Autowired
+	CoachInfoService coachInfoService;
+
+	@GetMapping("")
+	public ResponseEntity<List<DssCoachInfo>> getCoaches(){
+		List<DssCoachInfo> dssCoachInfos = coachInfoService.selectCoaches();
+		return new ResponseEntity<>(dssCoachInfos, HttpStatus.OK);
+	}
+
+	@GetMapping("/info")
+	public ResponseEntity<DssCoachInfo> getCoach(@RequestParam("id") int id){
+		DssCoachInfo dssCoachInfo = coachInfoService.selectCoachById(id);
+		return new ResponseEntity<>(dssCoachInfo, HttpStatus.OK);
+	}
+
+}
