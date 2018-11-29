@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan()
+@MapperScan("com.bin.design.drivingschool.mapper")
 public class DrivingschoolApplication {
 
     public static void main(String[] args) {
