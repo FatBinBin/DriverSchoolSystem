@@ -3,6 +3,8 @@ package com.bin.design.drivingschool.service.impl;
 import com.bin.design.drivingschool.entity.DssLearnerInfo;
 import com.bin.design.drivingschool.mapper.DssLearnerInfoMapper;
 import com.bin.design.drivingschool.service.LearnerInfoService;
+import com.bin.design.drivingschool.util.PageBean;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,9 @@ public class LearnerInfoServiceImpl implements LearnerInfoService {
 	DssLearnerInfoMapper dssLearnerInfoMapper;
 
 	@Override
-	public List<DssLearnerInfo> selectAllLearner() {
-		return dssLearnerInfoMapper.selectAll();
+	public PageBean<Map<String,Object>> selectAllLearner(Integer pageNum,Integer pageSize) {
+		PageHelper.startPage(pageNum,pageSize);
+		return new PageBean<>(dssLearnerInfoMapper.selectAll());
 	}
 
 	@Override

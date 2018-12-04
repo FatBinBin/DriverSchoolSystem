@@ -17,7 +17,7 @@ public interface DssLearnerInfoMapper {
      *
      * @return
      */
-    List<DssLearnerInfo> selectAll();
+    List<Map<String,Object>> selectAll();
 
     /**
      *
