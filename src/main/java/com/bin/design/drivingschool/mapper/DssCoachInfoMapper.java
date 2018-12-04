@@ -3,6 +3,7 @@ package com.bin.design.drivingschool.mapper;
 import com.bin.design.drivingschool.entity.DssCoachInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DssCoachInfoMapper {
 
@@ -12,7 +13,7 @@ public interface DssCoachInfoMapper {
 
     int insertSelective(DssCoachInfo record);
 
-    List<DssCoachInfo> selectAll();
+    List<Map<String, Object>> selectAll();
 
     DssCoachInfo selectByPrimaryKey(Integer id);
 

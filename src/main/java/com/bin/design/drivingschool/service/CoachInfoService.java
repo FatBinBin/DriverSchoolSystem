@@ -1,8 +1,10 @@
 package com.bin.design.drivingschool.service;
 
 import com.bin.design.drivingschool.entity.DssCoachInfo;
+import com.bin.design.drivingschool.util.PageBean;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author huangyubin
@@ -11,7 +13,7 @@ import java.util.List;
  */
 public interface CoachInfoService {
 
-	List<DssCoachInfo> selectCoaches();
+	PageBean<Map<String,Object>> selectCoaches(Integer pageNum,Integer pageSize);
 
 	DssCoachInfo selectCoachById(int id);
 }
