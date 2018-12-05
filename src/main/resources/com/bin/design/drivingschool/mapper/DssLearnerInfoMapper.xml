@@ -18,10 +18,18 @@
     ID, LEARNER_NAME, LEARNER_SEX, LEARNER_AGE, LEARNER_PHONE, LEARNER_ADDRESS, LEARNER_IDCAR, 
     PROCESSING, COACH_ID, CREATE_TIME, UPDATE_TIME
   </sql>
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="selectAll"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from dss_learner_info
+  </select>
+  <select id="selectByKey"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dss_learner_info
+    where LEARNER_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    or LEARNER_PHONE like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    or LEARNER_IDCAR like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -38,6 +46,13 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dss_learner_info
     where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List">
+    delete from dss_learner_info
+    where ID in
+    <foreach collection="list"  item="item" open="(" separator="," close=")"  >
+      #{item,jdbcType=INTEGER}
+    </foreach>
   </delete>
   <insert id="insert" parameterType="com.bin.design.drivingschool.entity.DssLearnerInfo">
     insert into dss_learner_info (ID, LEARNER_NAME, LEARNER_SEX, 

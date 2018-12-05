@@ -8,7 +8,7 @@
     -->
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
-    <result column="PHONE" jdbcType="INTEGER" property="phone" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
     <result column="WORD" jdbcType="VARCHAR" property="word" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -18,6 +18,11 @@
     -->
     ID, NAME, PHONE, WORD
   </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dss_leave_word
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--
       WARNING - @mbggenerated
@@ -43,7 +48,7 @@
     -->
     insert into dss_leave_word (ID, NAME, PHONE, 
       WORD)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
       #{word,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bin.design.drivingschool.entity.DssLeaveWord">
@@ -74,7 +79,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="phone != null">
-        #{phone,jdbcType=INTEGER},
+        #{phone,jdbcType=VARCHAR},
       </if>
       <if test="word != null">
         #{word,jdbcType=VARCHAR},
@@ -92,7 +97,7 @@
         NAME = #{name,jdbcType=VARCHAR},
       </if>
       <if test="phone != null">
-        PHONE = #{phone,jdbcType=INTEGER},
+        PHONE = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="word != null">
         WORD = #{word,jdbcType=VARCHAR},
@@ -107,7 +112,7 @@
     -->
     update dss_leave_word
     set NAME = #{name,jdbcType=VARCHAR},
-      PHONE = #{phone,jdbcType=INTEGER},
+      PHONE = #{phone,jdbcType=VARCHAR},
       WORD = #{word,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>

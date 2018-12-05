@@ -7,7 +7,17 @@ import java.util.Map;
 
 public interface DssLearnerInfoMapper {
 
+    /**
+     *
+     * @return
+     */
     int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @return
+     */
+    int deleteBatchByPrimaryKey(List list);
 
     int insert(DssLearnerInfo record);
 
@@ -18,6 +28,8 @@ public interface DssLearnerInfoMapper {
      * @return
      */
     List<Map<String,Object>> selectAll();
+
+    List<Map<String,Object>> selectByKey(String learnerName);
 
     /**
      *

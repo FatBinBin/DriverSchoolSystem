@@ -1,7 +1,6 @@
 package com.bin.design.drivingschool.controller;
 
-import com.bin.design.drivingschool.entity.DssLearnerInfo;
-import com.bin.design.drivingschool.service.LearnerInfoService;
+import com.bin.design.drivingschool.service.LeaveWordService;
 import com.bin.design.drivingschool.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,22 +14,23 @@ import java.util.Map;
 
 /**
  * @author huangyubin
- * @version 2018/11/29
+ * @version 2018/12/5
  * @since
  */
 
 @RequestMapping("/back")
 @RestController
-public class BlaernerController {
+public class BsystemManagementController {
 
 	@Autowired
-	LearnerInfoService learnerInfoService;
+	LeaveWordService leaveWordService;
 
-	@GetMapping("/learners")
-	public ResponseEntity<PageBean<Map<String,Object>>> getAllInfo( @RequestParam(value = "pageNum") int pageNum,
-																	@RequestParam(value = "pageSize") int pageSize){
-		PageBean<Map<String,Object>> dssLearnerInfos = learnerInfoService.selectAllLearner(pageNum,pageSize);
-		return new ResponseEntity<>(dssLearnerInfos, HttpStatus.OK);
+	@GetMapping("/words")
+	public ResponseEntity<PageBean<Map<String,Object>>> getAllInfo(@RequestParam(value = "pageNum") int pageNum,
+																   @RequestParam(value = "pageSize") int pageSize){
+		PageBean<Map<String,Object>> leaveWords  = leaveWordService.getAll(pageNum,pageSize);
+		return new ResponseEntity<>(leaveWords, HttpStatus.OK);
 	}
+
 
 }

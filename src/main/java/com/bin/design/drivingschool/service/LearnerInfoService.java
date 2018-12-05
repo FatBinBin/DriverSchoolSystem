@@ -13,12 +13,18 @@ import java.util.Map;
  */
 public interface LearnerInfoService {
 
-	PageBean<Map<String,Object>> selectAllLearner(Integer pageNum,Integer pageSize);
+	PageBean<Map<String,Object>> selectAllLearner(Integer pageNum,Integer pageSize,String learnerName);
 
 	DssLearnerInfo selectById(int id);
 
 	Map<String, Object> selectProcessedById(int id);
 
 	void updateById(DssLearnerInfo dssLearnerInfo);
+
+	void insert(DssLearnerInfo dssLearnerInfo);
+
+	void deleteById(Integer id);
+
+	void deleteBatchById(List list);
 
 }

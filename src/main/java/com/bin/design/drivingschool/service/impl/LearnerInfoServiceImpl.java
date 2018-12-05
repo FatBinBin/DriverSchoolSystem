@@ -5,6 +5,7 @@ import com.bin.design.drivingschool.mapper.DssLearnerInfoMapper;
 import com.bin.design.drivingschool.service.LearnerInfoService;
 import com.bin.design.drivingschool.util.PageBean;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,12 @@ public class LearnerInfoServiceImpl implements LearnerInfoService {
 	DssLearnerInfoMapper dssLearnerInfoMapper;
 
 	@Override
-	public PageBean<Map<String,Object>> selectAllLearner(Integer pageNum,Integer pageSize) {
-		PageHelper.startPage(pageNum,pageSize);
+	public PageBean<Map<String,Object>> selectAllLearner(Integer pageNum,Integer pageSize,String learnerName) {
+		PageHelper.startPage(pageNum, pageSize);
+		if (StringUtils.isEmpty(learnerName)) {
 		return new PageBean<>(dssLearnerInfoMapper.selectAll());
+		}
+		return new PageBean<>(dssLearnerInfoMapper.selectByKey(learnerName));
 	}
 
 	@Override
@@ -36,6 +40,21 @@ public class LearnerInfoServiceImpl implements LearnerInfoService {
 	@Override
 	public DssLearnerInfo selectById(int id) {
 		return dssLearnerInfoMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public void deleteBatchById(List list) {
+		dssLearnerInfoMapper.deleteBatchByPrimaryKey(list);
+	}
+
+	@Override
+	public void deleteById(Integer id) {
+		dssLearnerInfoMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public void insert(DssLearnerInfo dssLearnerInfo) {
+		dssLearnerInfoMapper.insertSelective(dssLearnerInfo);
 	}
 
 	@Override
