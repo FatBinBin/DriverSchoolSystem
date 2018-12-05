@@ -30,8 +30,10 @@ public class CoachController {
 
 	@GetMapping("")
 	public ResponseEntity<PageBean<Map<String,Object>>> getCoaches(@RequestParam(value = "pageNum") int pageNum,
-																   @RequestParam(value = "pageSize") int pageSize){
-		PageBean<Map<String,Object>> dssCoachInfos = coachInfoService.selectCoaches(pageNum,pageSize);
+																   @RequestParam(value = "pageSize") int pageSize,
+																   @RequestParam(required = false,value = "key")
+																			   String key){
+		PageBean<Map<String,Object>> dssCoachInfos = coachInfoService.selectCoaches(pageNum,pageSize,key);
 		return new ResponseEntity<>(dssCoachInfos, HttpStatus.OK);
 	}
 

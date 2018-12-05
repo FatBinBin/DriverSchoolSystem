@@ -13,7 +13,7 @@ public class DssCoachInfo {
 
     private String coachSex;
 
-    private String learnerIdcar;
+    private String coachIdcar;
 
     private Integer coachYear;
 

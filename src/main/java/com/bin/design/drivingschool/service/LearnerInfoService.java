@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface LearnerInfoService {
 
-	PageBean<Map<String,Object>> selectAllLearner(Integer pageNum,Integer pageSize,String learnerName);
+	PageBean<Map<String,Object>> selectAllLearner(Integer pageNum,Integer pageSize,String key);
 
 	DssLearnerInfo selectById(int id);
 

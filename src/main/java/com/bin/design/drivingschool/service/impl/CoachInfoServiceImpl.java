@@ -5,6 +5,7 @@ import com.bin.design.drivingschool.mapper.DssCoachInfoMapper;
 import com.bin.design.drivingschool.service.CoachInfoService;
 import com.bin.design.drivingschool.util.PageBean;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,33 @@ public class CoachInfoServiceImpl implements CoachInfoService {
 	DssCoachInfoMapper dssCoachInfoMapper;
 
 	@Override
-	public PageBean<Map<String,Object>> selectCoaches(Integer pageNum, Integer pageSize) {
+	public PageBean<Map<String,Object>> selectCoaches(Integer pageNum, Integer pageSize,String key) {
 		PageHelper.startPage(pageNum,pageSize);
+		if (StringUtils.isEmpty(key)){
 		return new PageBean<>(dssCoachInfoMapper.selectAll());
+		}
+		return new PageBean<>(dssCoachInfoMapper.selectByKey(key));
+
+	}
+
+	@Override
+	public void updateById(DssCoachInfo dssCoachInfo) {
+		dssCoachInfoMapper.updateByPrimaryKeySelective(dssCoachInfo);
+	}
+
+	@Override
+	public void insert(DssCoachInfo dssCoachInfo) {
+		dssCoachInfoMapper.insertSelective(dssCoachInfo);
+	}
+
+	@Override
+	public void deleteById(Integer id) {
+		dssCoachInfoMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public void deleteBatchById(List list) {
+		dssCoachInfoMapper.deleteBatchByPrimaryKey(list);
 	}
 
 	@Override

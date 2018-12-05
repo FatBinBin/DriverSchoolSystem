@@ -13,7 +13,15 @@ import java.util.Map;
  */
 public interface CoachInfoService {
 
-	PageBean<Map<String,Object>> selectCoaches(Integer pageNum,Integer pageSize);
+	PageBean<Map<String,Object>> selectCoaches(Integer pageNum,Integer pageSize, String key);
 
 	DssCoachInfo selectCoachById(int id);
+
+	void updateById(DssCoachInfo dssCoachInfo);
+
+	void insert(DssCoachInfo dssCoachInfo);
+
+	void deleteById(Integer id);
+
+	void deleteBatchById(List list);
 }

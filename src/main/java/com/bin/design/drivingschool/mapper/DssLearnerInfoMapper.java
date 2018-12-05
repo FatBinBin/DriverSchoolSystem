@@ -29,7 +29,7 @@ public interface DssLearnerInfoMapper {
      */
     List<Map<String,Object>> selectAll();
 
-    List<Map<String,Object>> selectByKey(String learnerName);
+    List<Map<String,Object>> selectByKey(String key);
 
     /**
      *

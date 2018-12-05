@@ -1,10 +1,10 @@
 package com.bin.design.drivingschool.controller;
 
+import com.bin.design.drivingschool.entity.DssCoachInfo;
 import com.bin.design.drivingschool.entity.DssLearnerInfo;
 import com.bin.design.drivingschool.service.CoachInfoService;
 import com.bin.design.drivingschool.service.LearnerInfoService;
 import com.bin.design.drivingschool.util.PageBean;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +34,6 @@ public class BuserManagementController {
 																   @RequestParam(required = false,value = "key")
 																			   String key){
 		PageBean<Map<String,Object>> dssLearnerInfos = learnerInfoService.selectAllLearner(pageNum,pageSize,key);
-
-
 		return new ResponseEntity<>(dssLearnerInfos, HttpStatus.OK);
 	}
 
@@ -53,22 +51,49 @@ public class BuserManagementController {
 
 
 	@DeleteMapping("/learners")
-	public ResponseEntity<Object> updateLearner(@RequestParam("id") int id){
+	public ResponseEntity<Object> deleteLearner(@RequestParam("id") int id){
 		learnerInfoService.deleteById(id);
 		return new ResponseEntity<>("删除成功",HttpStatus.OK);
 	}
 
 	@DeleteMapping("/batchLearners")
-	public ResponseEntity<Object> updateLearner(@RequestParam("id") List list){
+	public ResponseEntity<Object> deleteLearners(@RequestParam("id") List list){
 		learnerInfoService.deleteBatchById(list);
 		return new ResponseEntity<>("删除成功",HttpStatus.OK);
 	}
 
 	@GetMapping("/coaches")
 	public ResponseEntity<PageBean<Map<String,Object>>> getCoaches(@RequestParam(value = "pageNum") int pageNum,
-																   @RequestParam(value = "pageSize") int pageSize){
-		PageBean<Map<String,Object>> dssCoachInfos = coachInfoService.selectCoaches(pageNum,pageSize);
+																   @RequestParam(value = "pageSize") int pageSize,
+																   @RequestParam(required = false,value = "key")
+																			   String key){
+		PageBean<Map<String,Object>> dssCoachInfos = coachInfoService.selectCoaches(pageNum,pageSize,key);
 		return new ResponseEntity<>(dssCoachInfos, HttpStatus.OK);
+	}
+
+	@PutMapping("/coaches")
+	public ResponseEntity<Object> updateCoach(@RequestBody DssCoachInfo dssCoachInfo){
+		coachInfoService.updateById(dssCoachInfo);
+		return new ResponseEntity<>("更新成功",HttpStatus.OK);
+	}
+
+	@PostMapping("/coaches")
+	public ResponseEntity<Object> insertCoach(@RequestBody DssCoachInfo dssCoachInfo){
+		coachInfoService.insert(dssCoachInfo);
+		return new ResponseEntity<>("新增成功",HttpStatus.OK);
+	}
+
+
+	@DeleteMapping("/coaches")
+	public ResponseEntity<Object> deleteCoach(@RequestParam("id") int id){
+		coachInfoService.deleteById(id);
+		return new ResponseEntity<>("删除成功",HttpStatus.OK);
+	}
+
+	@DeleteMapping("/batchCoaches")
+	public ResponseEntity<Object> deleteCoaches(@RequestParam("id") List list){
+		coachInfoService.deleteBatchById(list);
+		return new ResponseEntity<>("删除成功",HttpStatus.OK);
 	}
 
 }
