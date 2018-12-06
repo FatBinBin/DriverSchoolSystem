@@ -15,4 +15,8 @@ public class DssLeaveWord {
     private String phone;
 
     private String word;
+
+    private Byte status;
+
+    private Byte type;
 }

@@ -11,7 +11,7 @@ public class DssCoachInfo {
 
     private String coachName;
 
-    private String coachSex;
+    private Byte coachSex;
 
     private String coachIdcar;
 
