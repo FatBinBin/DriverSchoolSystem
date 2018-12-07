@@ -1,5 +1,6 @@
 package com.bin.design.drivingschool.service;
 
+import com.bin.design.drivingschool.entity.DssLeaveWord;
 import com.bin.design.drivingschool.util.PageBean;
 import com.sun.xml.internal.ws.api.ha.StickyFeature;
 
@@ -13,6 +14,14 @@ import java.util.Map;
  */
 public interface LeaveWordService {
 
-	PageBean<Map<String,Object>> getAll(Integer pageNum, Integer pageSize);
+	PageBean<Map<String,Object>> getAll(Integer pageNum, Integer pageSize , String key);
+
+	void deleteById(Integer id);
+
+	void deleteBatchById(List list);
+
+	void updateWords(DssLeaveWord dssLeaveWord);
+
+
 
 }
