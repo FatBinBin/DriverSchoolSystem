@@ -17,6 +17,8 @@ public interface CoachInfoService {
 
 	DssCoachInfo selectCoachById(int id);
 
+	PageBean<Map<String,Object>> selectLearnerForCoach(Integer pageNum,Integer pageSize,Integer id);
+
 	void updateById(DssCoachInfo dssCoachInfo);
 
 	void insert(DssCoachInfo dssCoachInfo);

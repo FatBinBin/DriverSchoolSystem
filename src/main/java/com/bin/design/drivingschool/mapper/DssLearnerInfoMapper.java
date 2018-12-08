@@ -31,6 +31,8 @@ public interface DssLearnerInfoMapper {
 
     List<Map<String,Object>> selectByKey(String key);
 
+    List<Map<String,Object>> selectLearnerForCoach(Integer id);
+
     /**
      *
      * @param id

@@ -31,6 +31,14 @@
     or LEARNER_PHONE like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
     or LEARNER_IDCAR like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
   </select>
+  <select id="selectLearnerForCoach"  parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    LEARNER_NAME, LEARNER_SEX, LEARNER_PHONE, PROCESSING
+    from dss_learner_info l
+    left join dss_coach_info c
+    on l.COACH_ID = c.ID
+    where c.ID = #{id,jdbcType=INTEGER}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

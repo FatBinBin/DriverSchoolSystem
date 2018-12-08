@@ -100,6 +100,14 @@ public class BuserManagementController {
         return new ResponseEntity<>("删除成功", HttpStatus.OK);
     }
 
+    @GetMapping("/learnerForCoaches")
+    public ResponseEntity<PageBean<Map<String, Object>>> getLearnerForCoach(@RequestParam(value = "pageNum") int pageNum,
+                                                                    @RequestParam(value = "pageSize") int pageSize,
+                                                                    @RequestParam(value = "id")int id) {
+        PageBean<Map<String, Object>> dssCoachInfos = coachInfoService.selectLearnerForCoach(pageNum, pageSize, id);
+        return new ResponseEntity<>(dssCoachInfos, HttpStatus.OK);
+    }
+
     @PostMapping("/img")
     public ResponseEntity<Object> uploaImg(@RequestParam(value = "img") MultipartFile file) {
         String contentType = file.getContentType();

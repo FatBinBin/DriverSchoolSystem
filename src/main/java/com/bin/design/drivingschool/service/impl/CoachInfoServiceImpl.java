@@ -2,6 +2,7 @@ package com.bin.design.drivingschool.service.impl;
 
 import com.bin.design.drivingschool.entity.DssCoachInfo;
 import com.bin.design.drivingschool.mapper.DssCoachInfoMapper;
+import com.bin.design.drivingschool.mapper.DssLearnerInfoMapper;
 import com.bin.design.drivingschool.service.CoachInfoService;
 import com.bin.design.drivingschool.util.PageBean;
 import com.github.pagehelper.PageHelper;
@@ -22,6 +23,8 @@ public class CoachInfoServiceImpl implements CoachInfoService {
 
 	@Autowired
 	DssCoachInfoMapper dssCoachInfoMapper;
+	@Autowired
+	DssLearnerInfoMapper dssLearnerInfoMapper;
 
 	@Override
 	public PageBean<Map<String,Object>> selectCoaches(Integer pageNum, Integer pageSize,String key) {
@@ -56,5 +59,11 @@ public class CoachInfoServiceImpl implements CoachInfoService {
 	@Override
 	public DssCoachInfo selectCoachById(int id) {
 		return dssCoachInfoMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public PageBean<Map<String, Object>> selectLearnerForCoach(Integer pageNum, Integer pageSize, Integer id) {
+		PageHelper.startPage(pageNum,pageSize);
+		return new PageBean<>(dssLearnerInfoMapper.selectLearnerForCoach(id));
 	}
 }
