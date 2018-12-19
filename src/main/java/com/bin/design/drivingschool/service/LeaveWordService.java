@@ -16,6 +16,8 @@ public interface LeaveWordService {
 
 	PageBean<Map<String,Object>> getAll(Integer pageNum, Integer pageSize , String key);
 
+	void insert(DssLeaveWord dssLeaveWord);
+
 	void deleteById(Integer id);
 
 	void deleteBatchById(List list);

@@ -24,6 +24,11 @@ public class LeaveWordServiceImpl implements LeaveWordService {
 	DssLeaveWordMapper dssLeaveWordMapper;
 
 	@Override
+	public void insert(DssLeaveWord dssLeaveWord) {
+		dssLeaveWordMapper.insertSelective(dssLeaveWord);
+	}
+
+	@Override
 	public PageBean<Map<String, Object>> getAll(Integer pageNum, Integer pageSize , String key) {
 		PageHelper.startPage(pageNum,pageSize);
 		if (StringUtils.isEmpty(key)) {

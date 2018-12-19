@@ -32,8 +32,13 @@
     or COACH_IDCAR like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
     or COACH_PHONE like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
   </select>
+  <select id="selectIdAndName"  resultType="map">
+    select
+    ID id, COACH_NAME coachName
+    from dss_coach_info
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from dss_coach_info
     where ID = #{id,jdbcType=INTEGER}

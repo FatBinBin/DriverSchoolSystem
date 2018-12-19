@@ -57,6 +57,11 @@ public class CoachInfoServiceImpl implements CoachInfoService {
 	}
 
 	@Override
+	public List<Map<String, Object>> selectCoachIdAndName() {
+		return dssCoachInfoMapper.selectIdAndName();
+	}
+
+	@Override
 	public DssCoachInfo selectCoachById(int id) {
 		return dssCoachInfoMapper.selectByPrimaryKey(id);
 	}

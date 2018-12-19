@@ -34,6 +34,11 @@ public class AppointmentDrivingServiceImpl implements AppointmentDrivingService 
     }
 
     @Override
+    public void insert(DssAppointmentDriving dssAppointmentDriving) {
+        dssAppointmentDrivingMapper.insertSelective(dssAppointmentDriving);
+    }
+
+    @Override
     public PageBean<Map<String, Object>> getAll(Integer pageNum, Integer pageSize, String key) {
         PageHelper.startPage(pageNum,pageSize);
         if (StringUtils.isEmpty(key)) {

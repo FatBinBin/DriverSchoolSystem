@@ -43,4 +43,10 @@ public class CoachController {
 		return new ResponseEntity<>(dssCoachInfo, HttpStatus.OK);
 	}
 
+	@GetMapping("/idAndName")
+	public ResponseEntity<List<Map<String, Object>>> getCoachIdAndName(){
+		List<Map<String, Object>> dssCoachInfo = coachInfoService.selectCoachIdAndName();
+		return new ResponseEntity<>(dssCoachInfo, HttpStatus.OK);
+	}
+
 }

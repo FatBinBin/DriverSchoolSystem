@@ -15,6 +15,8 @@ public interface CoachInfoService {
 
 	PageBean<Map<String,Object>> selectCoaches(Integer pageNum,Integer pageSize, String key);
 
+	List<Map<String, Object>> selectCoachIdAndName();
+
 	DssCoachInfo selectCoachById(int id);
 
 	PageBean<Map<String,Object>> selectLearnerForCoach(Integer pageNum,Integer pageSize,Integer id);

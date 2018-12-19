@@ -10,6 +10,8 @@ public interface AppointmentDrivingService {
 
     PageBean<Map<String,Object>> getAll(Integer pageNum, Integer pageSize , String key);
 
+    void insert(DssAppointmentDriving dssAppointmentDriving);
+
     void deleteById(Integer id);
 
     void deleteBatchById(List list);
