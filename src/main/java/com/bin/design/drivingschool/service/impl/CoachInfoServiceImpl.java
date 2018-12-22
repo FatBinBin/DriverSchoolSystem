@@ -33,7 +33,6 @@ public class CoachInfoServiceImpl implements CoachInfoService {
 		return new PageBean<>(dssCoachInfoMapper.selectAll());
 		}
 		return new PageBean<>(dssCoachInfoMapper.selectByKey(key));
-
 	}
 
 	@Override

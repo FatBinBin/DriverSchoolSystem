@@ -13,7 +13,7 @@
     <result column="COACH_YEAR" jdbcType="INTEGER" property="coachYear" />
     <result column="COACH_PHONE" jdbcType="VARCHAR" property="coachPhone" />
     <result column="COACH_INTRO" jdbcType="VARCHAR" property="coachIntro" />
-    <result column="COACH_IMG" jdbcType="VARCHAR" property="coachImg" />
+    <result column="COACH_IMG" jdbcType="BLOB" property="coachImg" />
     <result column="ORDER_COUNT" jdbcType="INTEGER" property="orderCount" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -31,6 +31,12 @@
     where COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
     or COACH_IDCAR like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
     or COACH_PHONE like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from dss_coach_info
+    where COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
   </select>
   <select id="selectIdAndName"  resultType="map">
     select

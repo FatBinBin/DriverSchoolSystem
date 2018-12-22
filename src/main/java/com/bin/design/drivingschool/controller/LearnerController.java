@@ -48,10 +48,5 @@ public class LearnerController {
 		return new ResponseEntity<>(processed,HttpStatus.OK);
 	}
 
-	@PostMapping("/evaluated")
-	public ResponseEntity<Object> evaluate(@RequestBody DssEvaluate dssEvaluate){
-		evaluateService.insertEvalute(dssEvaluate);
-		return new ResponseEntity<>("评价成功",HttpStatus.OK);
 
-	}
 }

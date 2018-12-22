@@ -109,16 +109,17 @@ public class BuserManagementController {
     }
 
     @PostMapping("/img")
-    public ResponseEntity<Object> uploaImg(@RequestParam(value = "img") MultipartFile file) {
+    public ResponseEntity<Object> uploaImg(@RequestParam(value = "file") MultipartFile file) {
         String contentType = file.getContentType();
+        String filePath = "D:\\IdeaProject\\coachImg\\";
         String fileName = file.getOriginalFilename();
 //		log.debug("fileName--> {}, getContentType--> {}, uploadPath--> {}" ,fileName, contentType);
         try {
-            FileUtil.uploadFile(file.getBytes(), "D:\\IdeaProject\\coachImg\\", fileName);
+            FileUtil.uploadFile(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>("上传成功", HttpStatus.OK);
+        return new ResponseEntity<>(filePath+fileName, HttpStatus.OK);
     }
 
 }

@@ -23,6 +23,8 @@ public interface DssCoachInfoMapper {
 
     List<Map<String,Object>> selectByKey(String key);
 
+    List<Map<String,Object>> selectByName(String key);
+
     List<Map<String, Object>> selectIdAndName();
 
     DssCoachInfo selectByPrimaryKey(Integer id);

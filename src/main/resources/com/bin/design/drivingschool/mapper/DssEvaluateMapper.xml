@@ -5,17 +5,24 @@
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="COACH_ID" jdbcType="INTEGER" property="coachId" />
     <result column="CONTENT" jdbcType="VARCHAR" property="content" />
-    <result column="TYPE" jdbcType="BIT" property="type" />
+    <result column="TYPE" jdbcType="TINYINT" property="type" />
     <result column="LEANER_ID" jdbcType="INTEGER" property="leanerId" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, COACH_ID, CONTENT, EVALUATE, LEANER_ID
+    ID, COACH_ID, CONTENT, TYPE, LEANER_ID
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from dss_evaluate
     where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCoachId" parameterType="java.lang.Integer" resultType="map">
+    select
+    de.ID id, de.COACH_ID coachId, de.CONTENT content, de.TYPE type, de.LEANER_ID learnerId, dl.LEARNER_NAME learnerName
+    from dss_evaluate de
+    left join dss_learner_info dl on dl.ID = de.LEANER_ID
+    where de.COACH_ID = #{coachId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dss_evaluate
@@ -57,7 +64,7 @@
         #{content,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
-        #{type,jdbcType=BIT},
+        #{type,jdbcType=TINYINT},
       </if>
       <if test="leanerId != null">
         #{leanerId,jdbcType=INTEGER},
