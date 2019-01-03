@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,8 +23,11 @@ public class EvaluateController {
     @GetMapping("")
     public ResponseEntity<PageBean<Map<String, Object>>> getAllInfo(@RequestParam(value = "pageNum") int pageNum,
                                                                     @RequestParam(value = "pageSize") int pageSize,
-                                                                    @RequestParam(value = "coachId") int coachId) {
-        PageBean<Map<String, Object>> dssEvaluate = evaluateService.selectEvalutes(pageNum, pageSize, coachId);
+                                                                    @RequestParam(value = "coachId", required = false)
+                                                                                Integer coachId,
+                                                                    @RequestParam(value = "key", required = false)
+                                                                                String key) {
+        PageBean<Map<String, Object>> dssEvaluate = evaluateService.selectEvalutes(pageNum, pageSize, coachId, key);
         return new ResponseEntity<>(dssEvaluate, HttpStatus.OK);
     }
 
@@ -32,5 +36,17 @@ public class EvaluateController {
         evaluateService.insertEvalute(dssEvaluate);
         return new ResponseEntity<>("评价成功", HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity<Object> deleteCoach(@RequestParam("id") int id) {
+        evaluateService.deleteById(id);
+        return new ResponseEntity<>("删除成功", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/batch")
+    public ResponseEntity<Object> deleteCoaches(@RequestParam("id") List list) {
+        evaluateService.deleteBatchById(list);
+        return new ResponseEntity<>("删除成功", HttpStatus.OK);
     }
 }

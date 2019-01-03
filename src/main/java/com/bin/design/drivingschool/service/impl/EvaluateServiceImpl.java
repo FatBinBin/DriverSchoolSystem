@@ -5,9 +5,11 @@ import com.bin.design.drivingschool.mapper.DssEvaluateMapper;
 import com.bin.design.drivingschool.service.EvaluateService;
 import com.bin.design.drivingschool.util.PageBean;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,9 +24,24 @@ public class EvaluateServiceImpl implements EvaluateService {
 	DssEvaluateMapper dssEvaluateMapper;
 
 	@Override
-	public PageBean<Map<String, Object>> selectEvalutes(Integer pageNum, Integer pageSize, Integer coachId) {
+	public void deleteById(Integer id) {
+		dssEvaluateMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public void deleteBatchById(List list) {
+		dssEvaluateMapper.deleteBatchByPrimaryKey(list);
+	}
+
+	@Override
+	public PageBean<Map<String, Object>> selectEvalutes(Integer pageNum, Integer pageSize, Integer coachId, String key) {
 		PageHelper.startPage(pageNum,pageSize);
-		return new PageBean<>(dssEvaluateMapper.selectByCoachId(coachId));
+		if (coachId != null){
+			return new PageBean<>(dssEvaluateMapper.selectByCoachId(coachId));
+		}else if (StringUtils.isNotEmpty(key)){
+			return new PageBean<>(dssEvaluateMapper.selectAllByKey(key));
+		}
+		return new PageBean<>(dssEvaluateMapper.selectAll());
 	}
 
 	@Override

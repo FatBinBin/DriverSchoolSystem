@@ -9,6 +9,8 @@ public interface DssEvaluateMapper {
 
     int deleteByPrimaryKey(Integer id);
 
+    int deleteBatchByPrimaryKey(List list);
+
     int insert(DssEvaluate record);
 
     /**
@@ -21,6 +23,10 @@ public interface DssEvaluateMapper {
     DssEvaluate selectByPrimaryKey(Integer id);
 
     List<Map<String, Object>> selectByCoachId(Integer coachId);
+
+    List<Map<String, Object>> selectAll();
+
+    List<Map<String, Object>> selectAllByKey(String key);
 
     int updateByPrimaryKeySelective(DssEvaluate record);
 

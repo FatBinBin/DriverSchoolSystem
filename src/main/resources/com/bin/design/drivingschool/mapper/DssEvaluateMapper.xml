@@ -24,9 +24,32 @@
     left join dss_learner_info dl on dl.ID = de.LEANER_ID
     where de.COACH_ID = #{coachId,jdbcType=INTEGER}
   </select>
+  <select id="selectAll"  resultType="map">
+    select
+    de.ID id, de.COACH_ID coachId, dc.COACH_NAME coachName, de.LEANER_ID learnerId, dl.LEARNER_NAME learnerName,  de.CONTENT content, de.TYPE type
+    from dss_evaluate de
+    left join dss_learner_info dl on dl.ID = de.LEANER_ID
+		LEFT JOIN dss_coach_info dc on dc.ID = de.COACH_ID
+  </select>
+  <select id="selectAllByKey"  resultType="map">
+    select
+    de.ID id, de.COACH_ID coachId, dc.COACH_NAME coachName, de.LEANER_ID learnerId, dl.LEARNER_NAME learnerName,  de.CONTENT content, de.TYPE type
+    from dss_evaluate de
+    left join dss_learner_info dl on dl.ID = de.LEANER_ID
+	LEFT JOIN dss_coach_info dc on dc.ID = de.COACH_ID
+	where dl.LEARNER_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    or dc.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dss_evaluate
     where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dss_evaluate
+    where ID in
+    <foreach collection="list"  item="item" open="(" separator="," close=")"  >
+      #{item,jdbcType=INTEGER}
+    </foreach>
   </delete>
   <insert id="insert" parameterType="com.bin.design.drivingschool.entity.DssEvaluate">
     insert into dss_evaluate (ID, COACH_ID, CONTENT, 

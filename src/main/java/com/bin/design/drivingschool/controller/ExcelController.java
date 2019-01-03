@@ -40,7 +40,7 @@ public class ExcelController {
         try {
             //获取文件的路径
             //String excelPath = request.getSession().getServletContext().getRealPath("/template/"+"excel.xlsx");
-            String excelPath = getClass().getResource("/template/" + "excel.xlsx").getPath();
+            String excelPath = getClass().getResource("/template/" + "excel.xls").getPath();
             if(StringUtils.isEmpty(excelPath)){
                 return;
             }
@@ -66,7 +66,7 @@ public class ExcelController {
     }
 
     @PostMapping("")
-    public String importData(@RequestParam("file") MultipartFile file)
+    public String importData(@RequestParam MultipartFile file)
     {
         Workbook wb = null;
         List<DssPapers> dssPapersList = new ArrayList<>();
