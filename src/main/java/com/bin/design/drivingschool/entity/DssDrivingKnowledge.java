@@ -1,34 +1,20 @@
 package com.bin.design.drivingschool.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class DssDrivingKnowledge {
 
     private Integer id;
 
     private String knowledgeTopic;
 
+    private String knowledgeFrom;
+
     private String knowledgeContent;
 
-    public Integer getId() {
-        return id;
-    }
+    private String knowledgeImg;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getKnowledgeTopic() {
-        return knowledgeTopic;
-    }
-
-    public void setKnowledgeTopic(String knowledgeTopic) {
-        this.knowledgeTopic = knowledgeTopic == null ? null : knowledgeTopic.trim();
-    }
-
-    public String getKnowledgeContent() {
-        return knowledgeContent;
-    }
-
-    public void setKnowledgeContent(String knowledgeContent) {
-        this.knowledgeContent = knowledgeContent == null ? null : knowledgeContent.trim();
-    }
 }
