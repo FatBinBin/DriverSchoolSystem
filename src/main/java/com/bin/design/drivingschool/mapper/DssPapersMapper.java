@@ -14,6 +14,8 @@ public interface DssPapersMapper {
 
     int insertSelective(DssPapers record);
 
+    int insertBatch(List<DssPapers> dssPapersList);
+
     DssPapers selectByPrimaryKey(Integer id);
 
     List<Map<String, Object>> selectAll();

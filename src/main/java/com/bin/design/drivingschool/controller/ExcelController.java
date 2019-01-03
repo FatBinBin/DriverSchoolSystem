@@ -1,6 +1,7 @@
 package com.bin.design.drivingschool.controller;
 
 import com.bin.design.drivingschool.entity.DssPapers;
+import com.bin.design.drivingschool.mapper.DssPapersMapper;
 import com.bin.design.drivingschool.util.ExcelUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -9,9 +10,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -26,7 +29,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/excel")
 @Slf4j
+@Transactional
 public class ExcelController {
+
+    @Autowired
+    DssPapersMapper dssPapersMapper;
 
     @GetMapping("")
     public void downloadExcel(HttpServletResponse response,HttpServletRequest request) {
@@ -58,17 +65,19 @@ public class ExcelController {
         }
     }
 
-    public List<DssPapers> importData(File file)
+    @PostMapping("")
+    public String importData(@RequestParam("file") MultipartFile file)
     {
         Workbook wb = null;
-        List<DssPapers> dssPapersList = new ArrayList();
+        List<DssPapers> dssPapersList = new ArrayList<>();
         try
         {
-            if (ExcelUtil.isExcel2007(file.getPath())) {
-                wb = new XSSFWorkbook(new FileInputStream(file));
-            } else {
-                wb = new HSSFWorkbook(new FileInputStream(file));
-            }
+//            if (ExcelUtil.isExcel2007(file.getOriginalFilename())) {
+//                wb = new XSSFWorkbook(file.getInputStream());
+//            } else {
+//                wb = new HSSFWorkbook(file.getInputStream());
+//            }
+            wb = new XSSFWorkbook(file.getInputStream());
         }
         catch (IOException e)
         {
@@ -76,42 +85,49 @@ public class ExcelController {
 
             return null;
         }
-
-        Sheet sheet = wb.getSheetAt(0);//获取第一张表
-        for (int i = 0; i < sheet.getLastRowNum(); i++)
+        try
         {
-            Row row = sheet.getRow(i);//获取索引为i的行，以0开始
-            String question= row.getCell(0).getStringCellValue();//获取第i行的索引为0的单元格数据
-            String a = row.getCell(1).getStringCellValue();
-            String b = row.getCell(2).getStringCellValue();
-            String c = row.getCell(3).getStringCellValue();
-            String d = row.getCell(4).getStringCellValue();
-            String answer = row.getCell(5).getStringCellValue();
-            Byte type = Byte.parseByte(row.getCell(6).getStringCellValue());
-            if (StringUtils.isEmpty(question) || StringUtils.isEmpty(a) || StringUtils.isEmpty(b) || StringUtils.isEmpty(c)
-                    && StringUtils.isEmpty(d) || StringUtils.isEmpty(answer) || type == null)
+            Sheet sheet = wb.getSheetAt(0);//获取第一张表
+            for (int i = 1; i <= sheet.getLastRowNum(); i++)
             {
-                break;
+                Row row = sheet.getRow(i);//获取索引为i的行，以0开始
+                String question= row.getCell(0).getStringCellValue();//获取第i行的索引为0的单元格数据
+                String a = row.getCell(1).getStringCellValue();
+                String b = row.getCell(2).getStringCellValue();
+                String c = row.getCell(3).getStringCellValue();
+                String d = row.getCell(4).getStringCellValue();
+                String answer = row.getCell(5).getStringCellValue();
+                double type = row.getCell(6).getNumericCellValue();
+//                if (StringUtils.isEmpty(question) || StringUtils.isEmpty(a) || StringUtils.isEmpty(b) || StringUtils.isEmpty(c)
+//                        && StringUtils.isEmpty(d) || StringUtils.isEmpty(answer) )
+//                {
+//                    break;
+//                }
+                DssPapers dssPapers=new DssPapers();
+                dssPapers.setQuestion(question);
+                dssPapers.setA(a);
+                dssPapers.setB(b);
+                dssPapers.setC(c);
+                dssPapers.setD(d);
+                dssPapers.setAnswer(answer);
+                dssPapers.setType((byte)type);
+                dssPapers.setState((byte)1);
+                dssPapersList.add(dssPapers);
             }
-            DssPapers dssPapers=new DssPapers();
-            dssPapers.setQuestion(question);
-            dssPapers.setA(a);
-            dssPapers.setB(b);
-            dssPapers.setC(c);
-            dssPapers.setD(d);
-            dssPapers.setAnswer(answer);
-            dssPapers.setType(type);
-            dssPapersList.add(dssPapers);
+            dssPapersMapper.insertBatch(dssPapersList);
         }
-//        try
-//        {
-//
-//        }
-//        catch (IOException e)
-//        {
+        catch (NullPointerException e)
+        {
 //            e.printStackTrace();
-//        }
-        return dssPapersList;
+            return "格式错误";
+        }catch (Exception e){
+            return "文件错误";
+        }
+        for (DssPapers dssPapers : dssPapersList){
+            System.out.println(dssPapers.getA() + " " + dssPapers.getB() + " " + dssPapers.getC()
+            + " " + dssPapers.getD() + " " + dssPapers.getQuestion() + " " + dssPapers.getAnswer());
+        }
+        return "批量导入成功";
     }
 
 
