@@ -1,7 +1,9 @@
 package com.bin.design.drivingschool.service;
 
+import com.bin.design.drivingschool.entity.DssDrivingKnowledge;
 import com.bin.design.drivingschool.util.PageBean;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,5 +14,15 @@ import java.util.Map;
 public interface KnowledgeService {
 
 	PageBean<Map<String,Object>> selectCoaches(Integer pageNum, Integer pageSize, String key);
+
+	DssDrivingKnowledge selectById(Integer id);
+
+	void insert(DssDrivingKnowledge dssDrivingKnowledge);
+
+	void delete(Integer id);
+
+	void deleteBatch(List list);
+
+	void update(DssDrivingKnowledge dssDrivingKnowledge);
 
 }
