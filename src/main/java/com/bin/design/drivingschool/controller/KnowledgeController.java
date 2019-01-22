@@ -30,7 +30,7 @@ public class KnowledgeController {
 																   @RequestParam(value = "pageSize") int pageSize,
 																   @RequestParam(required = false,value = "key")
 																		   String key){
-		PageBean<Map<String,Object>> dssKnowledge = knowledgeService.selectCoaches(pageNum,pageSize,key);
+		PageBean<Map<String,Object>> dssKnowledge = knowledgeService.selectKnowledge(pageNum,pageSize,key);
 		return new ResponseEntity<>(dssKnowledge, HttpStatus.OK);
 	}
 
@@ -56,6 +56,14 @@ public class KnowledgeController {
 	public ResponseEntity<Object> deleteKnowledge(@RequestParam("id") int id) {
 		knowledgeService.delete(id);
 		return new ResponseEntity<>("删除成功", HttpStatus.OK);
+	}
+
+	@GetMapping("/comment")
+	public ResponseEntity<PageBean<Map<String,Object>>> getComment(@RequestParam(value = "pageNum") int pageNum,
+																	  @RequestParam(value = "pageSize") int pageSize,
+																	  @RequestParam(value = "id")  int id){
+		PageBean<Map<String,Object>> comment = knowledgeService.selectComment(pageNum,pageSize,id);
+		return new ResponseEntity<>(comment, HttpStatus.OK);
 	}
 
 }

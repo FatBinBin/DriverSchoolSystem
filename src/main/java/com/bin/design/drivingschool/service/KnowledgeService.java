@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface KnowledgeService {
 
-	PageBean<Map<String,Object>> selectCoaches(Integer pageNum, Integer pageSize, String key);
+	PageBean<Map<String,Object>> selectKnowledge(Integer pageNum, Integer pageSize, String key);
 
 	DssDrivingKnowledge selectById(Integer id);
 
@@ -24,5 +24,9 @@ public interface KnowledgeService {
 	void deleteBatch(List list);
 
 	void update(DssDrivingKnowledge dssDrivingKnowledge);
+
+	PageBean<Map<String, Object>> selectComment(Integer pageNum, Integer pageSize, Integer id);
+
+
 
 }

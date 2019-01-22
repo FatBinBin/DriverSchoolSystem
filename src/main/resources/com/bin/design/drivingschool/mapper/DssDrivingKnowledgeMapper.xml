@@ -36,6 +36,7 @@
         ,
         <include refid="Blob_Column_List" />
         from dss_driving_knowledge
+        ORDER BY CREATE_TIME DESC
     </select>
     <select id="selectByKey" resultMap="ResultMapWithBLOBs">
         select
