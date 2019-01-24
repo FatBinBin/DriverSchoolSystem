@@ -19,6 +19,10 @@ public interface LearnerInfoService {
 
 	Map<String, Object> selectProcessedById(int id);
 
+	DssLearnerInfo selectByLearnerPhone(DssLearnerInfo learnerInfo);
+
+	DssLearnerInfo selectLearnerByPhone(String learnerPhone);
+
 	void updateById(DssLearnerInfo dssLearnerInfo);
 
 	void insert(DssLearnerInfo dssLearnerInfo);

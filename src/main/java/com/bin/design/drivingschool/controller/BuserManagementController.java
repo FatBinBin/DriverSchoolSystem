@@ -5,7 +5,9 @@ import com.bin.design.drivingschool.entity.DssLearnerInfo;
 import com.bin.design.drivingschool.service.CoachInfoService;
 import com.bin.design.drivingschool.service.LearnerInfoService;
 import com.bin.design.drivingschool.util.FileUtil;
+import com.bin.design.drivingschool.util.MD5Utils;
 import com.bin.design.drivingschool.util.PageBean;
+import com.bin.design.drivingschool.util.PwdUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * @author huangyubin
@@ -49,8 +54,18 @@ public class BuserManagementController {
 
     @PostMapping("/learners")
     public ResponseEntity<Object> insertLearner(@RequestBody DssLearnerInfo dssLearnerInfo) {
+        DssLearnerInfo check = learnerInfoService.selectLearnerByPhone(dssLearnerInfo.getLearnerPhone());
+        if (check != null){
+            return new ResponseEntity<>("该手机已注册报名", HttpStatus.OK);
+        }
+        String password = PwdUtil.getPassword();
+        log.debug("生成的密码为" + password);
+        String encode = MD5Utils.MD5Encode(password, "UTF-8");
+        log.debug("MD5加密: " + encode);
+        log.debug("认证: " + encode.equals(MD5Utils.MD5Encode(password, "UTF-8")));
+        dssLearnerInfo.setLearnerPassword(password);
         learnerInfoService.insert(dssLearnerInfo);
-        return new ResponseEntity<>("新增成功", HttpStatus.OK);
+        return new ResponseEntity<>("新增成功,密码为：" + password, HttpStatus.OK);
     }
 
 

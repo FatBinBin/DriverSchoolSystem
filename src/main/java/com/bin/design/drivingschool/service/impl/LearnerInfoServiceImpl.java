@@ -58,6 +58,16 @@ public class LearnerInfoServiceImpl implements LearnerInfoService {
 	}
 
 	@Override
+	public DssLearnerInfo selectLearnerByPhone(String learnerPhone) {
+		return dssLearnerInfoMapper.findByLearnerPhone(learnerPhone);
+	}
+
+	@Override
+	public DssLearnerInfo selectByLearnerPhone(DssLearnerInfo dssLearnerInfo) {
+		return dssLearnerInfoMapper.findByLearnerPhone(dssLearnerInfo.getLearnerPhone());
+	}
+
+	@Override
 	public void updateById(DssLearnerInfo dssLearnerInfo) {
 		dssLearnerInfoMapper.updateByPrimaryKeySelective(dssLearnerInfo);
 

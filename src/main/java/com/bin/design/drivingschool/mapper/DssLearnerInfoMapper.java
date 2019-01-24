@@ -33,6 +33,9 @@ public interface DssLearnerInfoMapper {
 
     List<Map<String,Object>> selectLearnerForCoach(Integer id);
 
+    DssLearnerInfo findByLearnerPhone(String learnerPhone);
+
+//    DssLearnerInfo findLearnerByPhone(String learnerPhone);
     /**
      *
      * @param id

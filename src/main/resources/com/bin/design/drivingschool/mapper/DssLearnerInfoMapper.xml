@@ -9,13 +9,14 @@
     <result column="LEARNER_PHONE" jdbcType="VARCHAR" property="learnerPhone" />
     <result column="LEARNER_ADDRESS" jdbcType="VARCHAR" property="learnerAddress" />
     <result column="LEARNER_IDCAR" jdbcType="VARCHAR" property="learnerIdcar" />
+    <result column="LEARNER_PASSWORD" jdbcType="VARCHAR" property="learnerPassword"/>
     <result column="PROCESSING" jdbcType="TINYINT" property="processing" />
     <result column="COACH_ID" jdbcType="INTEGER" property="coachId" />
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, LEARNER_NAME, LEARNER_SEX, LEARNER_AGE, LEARNER_PHONE, LEARNER_ADDRESS, LEARNER_IDCAR, 
+    ID, LEARNER_NAME, LEARNER_SEX, LEARNER_AGE, LEARNER_PHONE, LEARNER_ADDRESS, LEARNER_IDCAR, LEARNER_PASSWORD,
     PROCESSING, COACH_ID, CREATE_TIME, UPDATE_TIME
   </sql>
   <select id="selectAll"  resultMap="BaseResultMap">
@@ -51,6 +52,12 @@
     from dss_learner_info
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  <select id="findByLearnerPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dss_learner_info
+    where LEARNER_PHONE = #{learnerPhone,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dss_learner_info
     where ID = #{id,jdbcType=INTEGER}
@@ -65,11 +72,11 @@
   <insert id="insert" parameterType="com.bin.design.drivingschool.entity.DssLearnerInfo">
     insert into dss_learner_info (ID, LEARNER_NAME, LEARNER_SEX, 
       LEARNER_AGE, LEARNER_PHONE, LEARNER_ADDRESS, 
-      LEARNER_IDCAR, PROCESSING, COACH_ID, 
+      LEARNER_IDCAR, LEARNER_PASSWORD, PROCESSING, COACH_ID,
       CREATE_TIME, UPDATE_TIME)
     values (#{id,jdbcType=INTEGER}, #{learnerName,jdbcType=VARCHAR}, #{learnerSex,jdbcType=BIT}, 
       #{learnerAge,jdbcType=INTEGER}, #{learnerPhone,jdbcType=INTEGER}, #{learnerAddress,jdbcType=VARCHAR}, 
-      #{learnerIdcar,jdbcType=INTEGER}, #{processing,jdbcType=BIT}, #{coachId,jdbcType=INTEGER}, 
+      #{learnerIdcar,jdbcType=INTEGER}, #{learnerPassword,jdbcType=VARCHAR}, #{processing,jdbcType=BIT}, #{coachId,jdbcType=INTEGER},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.bin.design.drivingschool.entity.DssLearnerInfo">
@@ -95,6 +102,9 @@
       </if>
       <if test="learnerIdcar != null">
         LEARNER_IDCAR,
+      </if>
+      <if test="learnerPassword != null">
+        LEARNER_PASSWORD,
       </if>
       <if test="processing != null">
         PROCESSING,
@@ -131,6 +141,9 @@
       <if test="learnerIdcar != null">
         #{learnerIdcar,jdbcType=INTEGER},
       </if>
+      <if test="learnerPassword != null">
+        #{learnerPassword,jdbcType=VARCHAR},
+      </if>
       <if test="processing != null">
         #{processing,jdbcType=BIT},
       </if>
@@ -166,6 +179,9 @@
       <if test="learnerIdcar != null">
         LEARNER_IDCAR = #{learnerIdcar,jdbcType=INTEGER},
       </if>
+      <if test="learnerPassword != null">
+        LEARNER_PASSWORD = #{learnerPassword,jdbcType=VARCHAR},
+      </if>
       <if test="processing != null">
         PROCESSING = #{processing,jdbcType=BIT},
       </if>
@@ -189,6 +205,7 @@
       LEARNER_PHONE = #{learnerPhone,jdbcType=INTEGER},
       LEARNER_ADDRESS = #{learnerAddress,jdbcType=VARCHAR},
       LEARNER_IDCAR = #{learnerIdcar,jdbcType=INTEGER},
+      LEARNER_PASSWORD = #{learnerPassword,jdbcType=VARCHAR},
       PROCESSING = #{processing,jdbcType=BIT},
       COACH_ID = #{coachId,jdbcType=INTEGER},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},

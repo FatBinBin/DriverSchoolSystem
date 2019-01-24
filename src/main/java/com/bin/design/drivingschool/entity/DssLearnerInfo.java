@@ -23,6 +23,8 @@ public class DssLearnerInfo {
 
     private String learnerIdcar;
 
+    private String learnerPassword;
+
     private Byte processing;
 
     private Integer coachId;
