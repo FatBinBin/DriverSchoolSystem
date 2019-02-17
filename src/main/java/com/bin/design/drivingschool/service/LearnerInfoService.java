@@ -23,6 +23,14 @@ public interface LearnerInfoService {
 
 	DssLearnerInfo selectLearnerByPhone(String learnerPhone);
 
+	DssLearnerInfo selectLearnerByIdcar(String learnerIdcar);
+
+	Map<String, Object> selectAllProsessing();
+
+	Map<String, Object> selectLearnerBySession();
+
+	Map<String, Object> selectLearnerByYear();
+
 	void updateById(DssLearnerInfo dssLearnerInfo);
 
 	void insert(DssLearnerInfo dssLearnerInfo);

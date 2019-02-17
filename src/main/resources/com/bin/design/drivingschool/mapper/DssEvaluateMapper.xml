@@ -40,6 +40,30 @@
 	where dl.LEARNER_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
     or dc.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
   </select>
+  <select id="selectByOrderCount" resultType="map">
+    select  count(a.ID) NUM, a.*, b.*  from dss_coach_info a
+    LEFT join dss_evaluate b on a.id = b.COACH_ID AND b.TYPE=1
+    GROUP BY a.ID
+    order by a.ORDER_COUNT desc LIMIT 5 ;
+  </select>
+  <select id="selectByEvaluateType" resultType="map">
+    select count(*) NUM, a.COACH_ID, b.* from dss_evaluate a
+    LEFT JOIN dss_coach_info b on a.COACH_ID = b.ID
+    WHERE a.TYPE =1
+    GROUP BY a.COACH_ID limit 5;
+  </select>
+  <select id="selectByLearner" resultType="map">
+    SELECT e.LEANER_ID learnerId, e.COACH_ID coachId, e.ID id, e.CONTENT content,
+     e.CREATE_TIME createTime, e.UPDATE_TIME updateTime, c.COACH_NAME coachName, TYPE type
+     FROM dss_evaluate e LEFT JOIN dss_coach_info c ON e.COACH_ID = c.ID
+     WHERE LEANER_ID = #{learnerId,jdbcType=INTEGER} AND e.TYPE != 0
+  </select>
+  <select id="selectComplaintByLearner" resultType="map">
+    SELECT e.LEANER_ID learnerId, e.COACH_ID coachId, e.ID id, e.CONTENT content,
+     e.CREATE_TIME createTime, e.UPDATE_TIME updateTime, c.COACH_NAME coachName, TYPE type
+     FROM dss_evaluate e LEFT JOIN dss_coach_info c ON e.COACH_ID = c.ID
+     WHERE LEANER_ID = #{learnerId,jdbcType=INTEGER} AND e.TYPE = 0
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dss_evaluate
     where ID = #{id,jdbcType=INTEGER}

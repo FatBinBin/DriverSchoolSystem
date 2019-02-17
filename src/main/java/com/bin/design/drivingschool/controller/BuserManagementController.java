@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -48,15 +49,27 @@ public class BuserManagementController {
 
     @PutMapping("/learners")
     public ResponseEntity<Object> updateLearner(@RequestBody DssLearnerInfo dssLearnerInfo) {
+        Map<String, Object> result = new HashMap<>();
+        DssLearnerInfo check = learnerInfoService.selectLearnerByIdcar(dssLearnerInfo.getLearnerIdcar());
+        if (check != null){
+            result.put("message","该身份证用户已经存在");
+            result.put("status","0");
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
         learnerInfoService.updateById(dssLearnerInfo);
-        return new ResponseEntity<>("更新成功", HttpStatus.OK);
+        result.put("message","更新成功");
+        result.put("status","1");
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("/learners")
     public ResponseEntity<Object> insertLearner(@RequestBody DssLearnerInfo dssLearnerInfo) {
-        DssLearnerInfo check = learnerInfoService.selectLearnerByPhone(dssLearnerInfo.getLearnerPhone());
+        Map<String, Object> result = new HashMap<>();
+        DssLearnerInfo check = learnerInfoService.selectLearnerByIdcar(dssLearnerInfo.getLearnerIdcar());
         if (check != null){
-            return new ResponseEntity<>("该手机已注册报名", HttpStatus.OK);
+            result.put("message","该身份证已注册报名");
+            result.put("status","0");
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }
         String password = PwdUtil.getPassword();
         log.debug("生成的密码为" + password);
@@ -65,7 +78,10 @@ public class BuserManagementController {
         log.debug("认证: " + encode.equals(MD5Utils.MD5Encode(password, "UTF-8")));
         dssLearnerInfo.setLearnerPassword(password);
         learnerInfoService.insert(dssLearnerInfo);
-        return new ResponseEntity<>("新增成功,密码为：" + password, HttpStatus.OK);
+        result.put("message","报名成功");
+        result.put("status","1");
+        result.put("password", password);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 

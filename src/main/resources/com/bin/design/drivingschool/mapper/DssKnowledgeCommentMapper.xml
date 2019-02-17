@@ -10,9 +10,10 @@
     <result column="LEARNER_ID" property="learnerId" jdbcType="INTEGER" />
     <result column="KNOWLEDGE_ID" property="knowledgeId" jdbcType="INTEGER" />
     <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="TINYINT"/>
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, LEARNER_ID, KNOWLEDGE_ID, CONTENT
+    ID, LEARNER_ID, KNOWLEDGE_ID, CONTENT, STATUS
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     <!--

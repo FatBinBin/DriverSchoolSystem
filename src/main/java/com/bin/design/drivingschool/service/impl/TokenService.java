@@ -10,7 +10,7 @@ public class TokenService {
     public static String getToken(DssLearnerInfo dssLearnerInfo) {
         String token="";
         token= JWT.create().withAudience(dssLearnerInfo.getLearnerPhone())
-                .sign(Algorithm.HMAC256(dssLearnerInfo.getLearnerPhone()));
+                .sign(Algorithm.HMAC256(dssLearnerInfo.getLearnerPassword()));
         return token;
     }
 }

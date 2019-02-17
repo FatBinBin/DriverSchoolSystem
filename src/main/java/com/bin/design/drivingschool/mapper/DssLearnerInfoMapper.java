@@ -1,6 +1,7 @@
 package com.bin.design.drivingschool.mapper;
 
 import com.bin.design.drivingschool.entity.DssLearnerInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,12 @@ public interface DssLearnerInfoMapper {
 
     DssLearnerInfo findByLearnerPhone(String learnerPhone);
 
+    DssLearnerInfo findByLearnerIdcar(String learnerIdcar);
+
+    List<Map<String, Object>> selectAllProcessing();
+
+    Map<String, Object> selectLearnerBySession(@Param("begin")String begin, @Param("end")String end);
+
 //    DssLearnerInfo findLearnerByPhone(String learnerPhone);
     /**
      *
@@ -46,6 +53,8 @@ public interface DssLearnerInfoMapper {
     /**
      *
      */
+    Map<String, Object> selectInfoByPrimaryKey(Integer id);
+
     Map<String, Object> selectProcessedByPrimaryKey(Integer id);
 
     /**

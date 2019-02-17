@@ -34,6 +34,28 @@ public class EvaluateServiceImpl implements EvaluateService {
 	}
 
 	@Override
+	public PageBean<Map<String, Object>> selectComplaintByLearner(Integer pageNum, Integer pageSize, Integer learnerId) {
+		PageHelper.startPage(pageNum,pageSize);
+		return new PageBean<>(dssEvaluateMapper.selectComplaintByLearner(learnerId));
+	}
+
+	@Override
+	public List<Map<String, Object>> recommendByOrderCount() {
+		return dssEvaluateMapper.selectByOrderCount();
+	}
+
+	@Override
+	public List<Map<String, Object>> recommendByEvaluateType() {
+		return dssEvaluateMapper.selectByEvaluateType();
+	}
+
+	@Override
+	public PageBean<Map<String, Object>> selectEvalutesByLearner(Integer pageNum, Integer pageSize, Integer learnerId) {
+		PageHelper.startPage(pageNum,pageSize);
+		return new PageBean<>(dssEvaluateMapper.selectByLearner(learnerId));
+	}
+
+	@Override
 	public PageBean<Map<String, Object>> selectEvalutes(Integer pageNum, Integer pageSize, Integer coachId, String key) {
 		PageHelper.startPage(pageNum,pageSize);
 		if (coachId != null){

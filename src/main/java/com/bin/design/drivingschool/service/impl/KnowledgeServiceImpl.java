@@ -1,6 +1,7 @@
 package com.bin.design.drivingschool.service.impl;
 
 import com.bin.design.drivingschool.entity.DssDrivingKnowledge;
+import com.bin.design.drivingschool.entity.DssKnowledgeComment;
 import com.bin.design.drivingschool.mapper.DssDrivingKnowledgeMapper;
 import com.bin.design.drivingschool.mapper.DssKnowledgeCommentMapper;
 import com.bin.design.drivingschool.service.KnowledgeService;
@@ -36,6 +37,11 @@ public class KnowledgeServiceImpl implements KnowledgeService {
 	@Override
 	public void insert(DssDrivingKnowledge dssDrivingKnowledge) {
 		dssDrivingKnowledgeMapper.insertSelective(dssDrivingKnowledge);
+	}
+
+	@Override
+	public int insertComment(DssKnowledgeComment dssKnowledgeComment) {
+		return dssKnowledgeCommentMapper.insertSelective(dssKnowledgeComment);
 	}
 
 	@Override

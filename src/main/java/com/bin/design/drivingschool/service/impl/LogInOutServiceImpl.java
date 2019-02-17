@@ -56,7 +56,7 @@ public class LogInOutServiceImpl implements LogInOutService {
     public Map<String, Object> login(Map<String, Object> param, HttpSession httpSession) {
         Map<String, Object> result = new HashMap<>();
         //用户验证
-        DssLearnerInfo userForBase = learnerInfoService.selectLearnerByPhone(param.get("learnerPhone").toString());
+        DssLearnerInfo userForBase = learnerInfoService.selectLearnerByIdcar(param.get("learnerIdcar").toString());
         if (userForBase != null && userForBase.getLearnerPassword().equals(param.get("learnerPassword").toString())) {
             String message = userForBase.getLearnerPhone()+userForBase.getLearnerName();
             int loginType = validateLogin(httpSession, message);
@@ -124,8 +124,8 @@ public class LogInOutServiceImpl implements LogInOutService {
     }
 
     @Override
-    public DssLearnerInfo getUser(Integer id) {
-        return dssLearnerInfoMapper.selectByPrimaryKey(id);
+    public Map<String, Object> getUser(Integer id) {
+        return dssLearnerInfoMapper.selectInfoByPrimaryKey(id);
     }
 
     /**

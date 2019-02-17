@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Map;
 
@@ -49,4 +50,33 @@ public class EvaluateController {
         evaluateService.deleteBatchById(list);
         return new ResponseEntity<>("删除成功", HttpStatus.OK);
     }
+
+    @GetMapping("/recommend/orderCount")
+    public ResponseEntity<Object> recommendCoach1(){
+        List<Map<String, Object>> result = evaluateService.recommendByOrderCount();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/recommend/evaluateType")
+    public ResponseEntity<Object> recommendCoach2(){
+        List<Map<String, Object>> result = evaluateService.recommendByEvaluateType();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/learner")
+    public ResponseEntity<PageBean<Map<String, Object>>> getEvaluateByLearner(@RequestParam(value = "pageNum") int pageNum,
+                                                                    @RequestParam(value = "pageSize") int pageSize,
+                                                                            Integer learnerId) {
+        PageBean<Map<String, Object>> dssEvaluate = evaluateService.selectEvalutesByLearner(pageNum, pageSize, learnerId);
+        return new ResponseEntity<>(dssEvaluate, HttpStatus.OK);
+    }
+
+    @GetMapping("/complaint")
+    public ResponseEntity<PageBean<Map<String, Object>>> getcomplaintByLearner(@RequestParam(value = "pageNum") int pageNum,
+                                                                              @RequestParam(value = "pageSize") int pageSize,
+                                                                              Integer learnerId) {
+        PageBean<Map<String, Object>> dssEvaluate = evaluateService.selectComplaintByLearner(pageNum, pageSize, learnerId);
+        return new ResponseEntity<>(dssEvaluate, HttpStatus.OK);
+    }
+
 }

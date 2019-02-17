@@ -46,6 +46,15 @@
     from dss_learner_info
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectInfoByPrimaryKey" parameterType="java.lang.Integer" resultType="map">
+    select l.ID id, l.LEARNER_NAME learnerName,l.LEARNER_SEX learnerSex,
+    l.LEARNER_AGE learnerAge,l.LEARNER_PHONE learnerPhone,
+    l.LEARNER_IDCAR learnerIdcar,l.LEARNER_ADDRESS learnerAddress,
+    l.PROCESSING processing,l.COACH_ID coachId,c.COACH_NAME coachName, c.COACH_PHONE coachPhone, c.COACH_IMG coachImg
+    from dss_learner_info l
+    LEFT JOIN dss_coach_info c on l.COACH_ID = c.ID
+    WHERE l.ID = #{id,jdbcType=INTEGER}
+  </select>
   <select id="selectProcessedByPrimaryKey" parameterType="java.lang.Integer" resultType="map">
     select
     PROCESSING processing
@@ -57,6 +66,22 @@
     <include refid="Base_Column_List" />
     from dss_learner_info
     where LEARNER_PHONE = #{learnerPhone,jdbcType=VARCHAR}
+  </select>
+  <select id="findByLearnerIdcar" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dss_learner_info
+    where LEARNER_IDCAR = #{learnerIdcar,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllProcessing" resultType="map">
+    select COUNT(1) num, PROCESSING processing
+    from dss_learner_info
+    GROUP BY PROCESSING
+  </select>
+  <select id="selectLearnerBySession" resultType="map">
+    select COUNT(1) num
+    from dss_learner_info
+    WHERE CREATE_TIME BETWEEN #{begin,jdbcType=VARCHAR} and #{end,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dss_learner_info

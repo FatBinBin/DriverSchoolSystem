@@ -1,6 +1,7 @@
 package com.bin.design.drivingschool.controller;
 
 import com.bin.design.drivingschool.entity.DssDrivingKnowledge;
+import com.bin.design.drivingschool.entity.DssKnowledgeComment;
 import com.bin.design.drivingschool.service.KnowledgeService;
 import com.bin.design.drivingschool.util.PageBean;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -60,10 +62,24 @@ public class KnowledgeController {
 
 	@GetMapping("/comment")
 	public ResponseEntity<PageBean<Map<String,Object>>> getComment(@RequestParam(value = "pageNum") int pageNum,
-																	  @RequestParam(value = "pageSize") int pageSize,
-																	  @RequestParam(value = "id")  int id){
+																   @RequestParam(value = "pageSize") int pageSize,
+																   @RequestParam(value = "id")  int id){
 		PageBean<Map<String,Object>> comment = knowledgeService.selectComment(pageNum,pageSize,id);
 		return new ResponseEntity<>(comment, HttpStatus.OK);
+	}
+
+	@PostMapping("/comment")
+	public ResponseEntity<Object> addComment(@RequestBody DssKnowledgeComment dssKnowledgeComment){
+		Map<String, Object> result = new HashMap<>();
+		int count = knowledgeService.insertComment(dssKnowledgeComment);
+		if (count > 0){
+			result.put("message", "提交成功");
+			result.put("status", "1");
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}
+		result.put("message", "提交失败");
+		result.put("status", "0");
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 }

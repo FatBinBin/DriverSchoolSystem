@@ -12,7 +12,7 @@ public interface LogInOutService {
 
     Map<String, Object> logout(HttpSession httpSession);
 
-    DssLearnerInfo getUser(Integer id);
+    Map<String, Object> getUser(Integer id);
 
 
 }

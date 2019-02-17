@@ -45,8 +45,8 @@ public class LoginOutController {
     }
 
     @GetMapping(value = "/info")
-    public ResponseEntity<DssLearnerInfo> info(@RequestParam("id") int id){
-        DssLearnerInfo learnerInfo = logInOutService.getUser(id);
+    public ResponseEntity<Object> info(@RequestParam("id") int id){
+        Map<String, Object> learnerInfo = logInOutService.getUser(id);
         log.debug("用户信息, {}", learnerInfo);
         return new ResponseEntity<>(learnerInfo, HttpStatus.OK);
     }

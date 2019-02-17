@@ -1,6 +1,7 @@
 package com.bin.design.drivingschool.service;
 
 import com.bin.design.drivingschool.entity.DssDrivingKnowledge;
+import com.bin.design.drivingschool.entity.DssKnowledgeComment;
 import com.bin.design.drivingschool.util.PageBean;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public interface KnowledgeService {
 	void update(DssDrivingKnowledge dssDrivingKnowledge);
 
 	PageBean<Map<String, Object>> selectComment(Integer pageNum, Integer pageSize, Integer id);
+
+	int insertComment(DssKnowledgeComment dssKnowledgeComment);
 
 
 
