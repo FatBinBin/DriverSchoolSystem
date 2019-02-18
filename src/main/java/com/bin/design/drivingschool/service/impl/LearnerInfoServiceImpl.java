@@ -59,6 +59,11 @@ public class LearnerInfoServiceImpl implements LearnerInfoService {
 	}
 
 	@Override
+	public int batchInsert(List<DssLearnerInfo> dssLearnerInfos) {
+		return dssLearnerInfoMapper.batchInsert(dssLearnerInfos);
+	}
+
+	@Override
 	public void insert(DssLearnerInfo dssLearnerInfo) {
 		dssLearnerInfoMapper.insertSelective(dssLearnerInfo);
 	}

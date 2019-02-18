@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,7 @@ import java.util.logging.Logger;
 @RequestMapping("/back")
 @RestController
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class BuserManagementController {
 
     @Autowired
@@ -137,6 +139,32 @@ public class BuserManagementController {
                                                                     @RequestParam(value = "id")int id) {
         PageBean<Map<String, Object>> dssCoachInfos = coachInfoService.selectLearnerForCoach(pageNum, pageSize, id);
         return new ResponseEntity<>(dssCoachInfos, HttpStatus.OK);
+    }
+
+    @PostMapping("/batchLearners")
+    public ResponseEntity<Object> BatchInsertLearner(@RequestBody List<DssLearnerInfo> dssLearnerInfos) {
+        Map<String, Object> result = new HashMap<>();
+        String pass = "";
+        for (DssLearnerInfo dssLearnerInfo : dssLearnerInfos) {
+            DssLearnerInfo check = learnerInfoService.selectLearnerByIdcar(dssLearnerInfo.getLearnerIdcar());
+            if (check != null) {
+                result.put("message", check.getLearnerIdcar() + "已注册报名");
+                result.put("status", "0");
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            String password = PwdUtil.getPassword();
+            log.debug("生成的密码为" + password);
+            String encode = MD5Utils.MD5Encode(password, "UTF-8");
+            log.debug("MD5加密: " + encode);
+            log.debug("认证: " + encode.equals(MD5Utils.MD5Encode(password, "UTF-8")));
+            dssLearnerInfo.setLearnerPassword(password);
+            pass = pass + dssLearnerInfo.getLearnerName()+"的密码为：" + password + "\n";
+        }
+        learnerInfoService.batchInsert(dssLearnerInfos);
+        result.put("message", "报名成功");
+        result.put("status", "1");
+        result.put("password", pass);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("/img")

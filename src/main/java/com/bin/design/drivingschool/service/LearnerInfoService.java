@@ -35,6 +35,8 @@ public interface LearnerInfoService {
 
 	void insert(DssLearnerInfo dssLearnerInfo);
 
+	int batchInsert(List<DssLearnerInfo> dssLearnerInfos);
+
 	void deleteById(Integer id);
 
 	void deleteBatchById(List list);

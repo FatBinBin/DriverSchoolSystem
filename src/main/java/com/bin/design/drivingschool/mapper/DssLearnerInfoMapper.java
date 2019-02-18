@@ -24,6 +24,8 @@ public interface DssLearnerInfoMapper {
 
     int insertSelective(DssLearnerInfo record);
 
+    int batchInsert(List<DssLearnerInfo> dssLearnerInfos);
+
     /**
      *
      * @return

@@ -104,6 +104,15 @@
       #{learnerIdcar,jdbcType=INTEGER}, #{learnerPassword,jdbcType=VARCHAR}, #{processing,jdbcType=BIT}, #{coachId,jdbcType=INTEGER},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
+  <insert id="batchInsert" parameterType="List">
+    insert into dss_learner_info (LEARNER_NAME, LEARNER_SEX,
+    LEARNER_AGE, LEARNER_PHONE, LEARNER_ADDRESS,
+    LEARNER_IDCAR, LEARNER_PASSWORD, COACH_ID) values
+    <foreach collection="list" item="LearnerInfo" index="index" separator="," >
+      (#{LearnerInfo.learnerName}, #{LearnerInfo.learnerSex}, #{LearnerInfo.learnerAge}, #{LearnerInfo.learnerPhone},
+      #{LearnerInfo.learnerAddress}, #{LearnerInfo.learnerIdcar}, #{LearnerInfo.learnerPassword}, #{LearnerInfo.coachId})
+    </foreach>
+  </insert>
   <insert id="insertSelective" parameterType="com.bin.design.drivingschool.entity.DssLearnerInfo">
     insert into dss_learner_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
