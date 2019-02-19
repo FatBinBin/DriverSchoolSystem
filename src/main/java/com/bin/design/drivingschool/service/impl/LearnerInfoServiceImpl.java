@@ -64,6 +64,11 @@ public class LearnerInfoServiceImpl implements LearnerInfoService {
 	}
 
 	@Override
+	public int updateTitleById(Integer title, Integer id) {
+		return dssLearnerInfoMapper.updateTitleByPrimaryKey(title, id);
+	}
+
+	@Override
 	public void insert(DssLearnerInfo dssLearnerInfo) {
 		dssLearnerInfoMapper.insertSelective(dssLearnerInfo);
 	}
@@ -125,6 +130,11 @@ public class LearnerInfoServiceImpl implements LearnerInfoService {
 	@Override
 	public DssLearnerInfo selectByLearnerPhone(DssLearnerInfo dssLearnerInfo) {
 		return dssLearnerInfoMapper.findByLearnerPhone(dssLearnerInfo.getLearnerPhone());
+	}
+
+	@Override
+	public Map<String, Object> selectTitleById(Integer id) {
+		return dssLearnerInfoMapper.selectTitleById(id);
 	}
 
 	@Override

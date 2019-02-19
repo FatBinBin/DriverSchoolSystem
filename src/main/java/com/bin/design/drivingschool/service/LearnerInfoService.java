@@ -31,7 +31,11 @@ public interface LearnerInfoService {
 
 	Map<String, Object> selectLearnerByYear();
 
+	Map<String, Object> selectTitleById(Integer id);
+
 	void updateById(DssLearnerInfo dssLearnerInfo);
+
+	int updateTitleById(Integer title, Integer id);
 
 	void insert(DssLearnerInfo dssLearnerInfo);
 

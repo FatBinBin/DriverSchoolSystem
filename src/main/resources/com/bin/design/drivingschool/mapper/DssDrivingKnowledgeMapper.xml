@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bin.design.drivingschool.mapper.DssDrivingKnowledgeMapper">
+<mapper namespace="com.bin.design.drivingschool.mapper.selectByKeyDssDrivingKnowledgeMapper">
   <resultMap id="BaseResultMap" type="com.bin.design.drivingschool.entity.DssDrivingKnowledge">
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="KNOWLEDGE_TOPIC" jdbcType="VARCHAR" property="knowledgeTopic" />
@@ -30,20 +30,18 @@
     from dss_driving_knowledge
     where ID = #{id,jdbcType=INTEGER}
   </select>
-    <select id="selectAll" resultMap="ResultMapWithBLOBs">
-        select
-        <include refid="Base_Column_List" />
-        ,
-        <include refid="Blob_Column_List" />
-        from dss_driving_knowledge
-        ORDER BY CREATE_TIME DESC
+    <select id="selectAll" resultType="map">
+        SELECT DISTINCT(k.ID) id, k.KNOWLEDGE_TOPIC knowledgeTopic, k.KNOWLEDGE_FROM knowledgeFrom,
+        k.KNOWLEDGE_CONTENT knowledgeContent, k.KNOWLEDGE_IMG knowledgeImg, k.CREATE_TIME creatTime,
+        k.UPDATE_TIME updateTime, c.`STATUS` status FROM dss_driving_knowledge k
+        LEFT JOIN dss_knowledge_comment c on k.ID =c.KNOWLEDGE_ID and c.`STATUS` = 0
+        ORDER BY k.CREATE_TIME DESC
     </select>
-    <select id="selectByKey" resultMap="ResultMapWithBLOBs">
-        select
-        <include refid="Base_Column_List" />
-        ,
-        <include refid="Blob_Column_List" />
-        from dss_driving_knowledge
+    <select id="selectByKey" resultType="map">
+        SELECT DISTINCT(k.ID) id, k.KNOWLEDGE_TOPIC knowledgeTopic, k.KNOWLEDGE_FROM knowledgeFrom,
+        k.KNOWLEDGE_CONTENT knowledgeContent, k.KNOWLEDGE_IMG knowledgeImg, k.CREATE_TIME creatTime,
+        k.UPDATE_TIME updateTime, c.`STATUS` status FROM dss_driving_knowledge k
+        LEFT JOIN dss_knowledge_comment c on k.ID =c.KNOWLEDGE_ID and c.`STATUS` = 0
         where KNOWLEDGE_TOPIC like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
     </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

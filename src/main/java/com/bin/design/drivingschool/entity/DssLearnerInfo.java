@@ -29,6 +29,8 @@ public class DssLearnerInfo {
 
     private Integer coachId;
 
+    private Integer title;
+
     private Date createTime;
 
     private Date updateTime;

@@ -69,5 +69,32 @@ public class LearnerController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
+	@GetMapping("/title")
+	public ResponseEntity<Object> getTitle(@RequestParam(value = "id") int id) {
+		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> map = learnerInfoService.selectTitleById(id);
+		if (map != null) {
+			result.put("status", 1);
+			result.put("data", map);
+		} else {
+			result.put("status", 0);
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@PutMapping("/title")
+		public ResponseEntity<Object> title(@RequestBody Map<String, Object> map){
+			Map<String, Object> result = new HashMap<>();
+			int title = Integer.parseInt(map.get("title").toString());
+			int id = Integer.parseInt(map.get("id").toString());
+			int count = learnerInfoService.updateTitleById(title, id);
+			if (count > 0) {
+				result.put("status", 1);
+			}else {
+				result.put("status", 0);
+			}
+			return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 
 }

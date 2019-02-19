@@ -59,12 +59,11 @@ public interface DssLearnerInfoMapper {
 
     Map<String, Object> selectProcessedByPrimaryKey(Integer id);
 
-    /**
-     *
-     * @param record
-     * @return
-     */
+    Map<String, Object> selectTitleById(Integer id);
+
     int updateByPrimaryKeySelective(DssLearnerInfo record);
+
+    int updateTitleByPrimaryKey(@Param("title") Integer title, @Param("id") Integer id);
 
     int updateByPrimaryKey(DssLearnerInfo record);
 }
