@@ -2,6 +2,7 @@ package com.bin.design.drivingschool.service;
 
 import com.bin.design.drivingschool.entity.DssDrivingKnowledge;
 import com.bin.design.drivingschool.entity.DssKnowledgeComment;
+import com.bin.design.drivingschool.entity.DssKnowledgeReply;
 import com.bin.design.drivingschool.util.PageBean;
 
 import java.util.List;
@@ -29,6 +30,10 @@ public interface KnowledgeService {
 	PageBean<Map<String, Object>> selectComment(Integer pageNum, Integer pageSize, Integer id);
 
 	int insertComment(DssKnowledgeComment dssKnowledgeComment);
+
+	int updateCommentStatus(DssKnowledgeComment dssKnowledgeComment);
+
+	int insertReply(DssKnowledgeReply dssKnowledgeReply);
 
 
 

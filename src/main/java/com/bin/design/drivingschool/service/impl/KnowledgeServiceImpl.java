@@ -2,8 +2,10 @@ package com.bin.design.drivingschool.service.impl;
 
 import com.bin.design.drivingschool.entity.DssDrivingKnowledge;
 import com.bin.design.drivingschool.entity.DssKnowledgeComment;
+import com.bin.design.drivingschool.entity.DssKnowledgeReply;
 import com.bin.design.drivingschool.mapper.DssDrivingKnowledgeMapper;
 import com.bin.design.drivingschool.mapper.DssKnowledgeCommentMapper;
+import com.bin.design.drivingschool.mapper.DssKnowledgeReplyMapper;
 import com.bin.design.drivingschool.service.KnowledgeService;
 import com.bin.design.drivingschool.util.PageBean;
 import com.github.pagehelper.PageHelper;
@@ -28,6 +30,8 @@ public class KnowledgeServiceImpl implements KnowledgeService {
 	DssDrivingKnowledgeMapper dssDrivingKnowledgeMapper;
 	@Autowired
 	DssKnowledgeCommentMapper dssKnowledgeCommentMapper;
+	@Autowired
+	DssKnowledgeReplyMapper dssKnowledgeReplyMapper;
 
 	@Override
 	public DssDrivingKnowledge selectById(Integer id) {
@@ -37,6 +41,16 @@ public class KnowledgeServiceImpl implements KnowledgeService {
 	@Override
 	public void insert(DssDrivingKnowledge dssDrivingKnowledge) {
 		dssDrivingKnowledgeMapper.insertSelective(dssDrivingKnowledge);
+	}
+
+	@Override
+	public int updateCommentStatus(DssKnowledgeComment dssKnowledgeComment) {
+		return dssKnowledgeCommentMapper.updateByPrimaryKeySelective(dssKnowledgeComment);
+	}
+
+	@Override
+	public int insertReply(DssKnowledgeReply dssKnowledgeReply) {
+		return dssKnowledgeReplyMapper.insertSelective(dssKnowledgeReply);
 	}
 
 	@Override

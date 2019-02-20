@@ -2,6 +2,7 @@ package com.bin.design.drivingschool.controller;
 
 import com.bin.design.drivingschool.entity.DssDrivingKnowledge;
 import com.bin.design.drivingschool.entity.DssKnowledgeComment;
+import com.bin.design.drivingschool.entity.DssKnowledgeReply;
 import com.bin.design.drivingschool.service.KnowledgeService;
 import com.bin.design.drivingschool.util.PageBean;
 import lombok.extern.slf4j.Slf4j;
@@ -81,5 +82,34 @@ public class KnowledgeController {
 		result.put("status", "0");
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+
+	@PutMapping("/comment/status")
+	public ResponseEntity<Object> updateStatus(@RequestBody DssKnowledgeComment dssKnowledgeComment){
+		Map<String, Object> result = new HashMap<>();
+		int count = knowledgeService.updateCommentStatus(dssKnowledgeComment);
+		if (count > 0){
+			result.put("message", "更新成功");
+			result.put("status", "1");
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}
+		result.put("message", "更新失败");
+		result.put("status", "0");
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("/reply")
+	public ResponseEntity<Object> reply(@RequestBody DssKnowledgeReply dssKnowledgeReply){
+		Map<String, Object> result = new HashMap<>();
+		int count = knowledgeService.insertReply(dssKnowledgeReply);
+		if (count > 0){
+			result.put("message", "回复成功");
+			result.put("status", "1");
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}
+		result.put("message", "提交失败");
+		result.put("status", "0");
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 
 }

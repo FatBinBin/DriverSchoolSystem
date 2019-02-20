@@ -26,7 +26,7 @@
     where ID = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectCommentByLearner" resultType="map" parameterType="java.lang.Integer">
-    select a.LEARNER_ID learnerId, a.CONTENT commentContent, c.LEARNER_NAME learnerName, d.CONTENT replyContent
+    select a.ID id, a.LEARNER_ID learnerId, a.CONTENT commentContent, a.STATUS status, c.LEARNER_NAME learnerName, d.CONTENT replyContent
     from dss_knowledge_comment a left join dss_driving_knowledge b on a.KNOWLEDGE_ID = b.ID
     left join dss_learner_info c on a.LEARNER_ID = c.ID
     left join dss_knowledge_reply d on a.ID = d.COMMENT_ID
@@ -100,6 +100,9 @@
       </if>
       <if test="content != null" >
         CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=TINYINT},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}

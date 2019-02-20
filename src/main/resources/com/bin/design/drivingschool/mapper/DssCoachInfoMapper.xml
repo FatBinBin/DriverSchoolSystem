@@ -187,4 +187,44 @@
       ORDER_COUNT = #{orderCount,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  <select id="coachForm" resultType="map">
+    SELECT  t1.ID id, t1.COACH_NAME coachName, t1.learnerNum, t2.pass, t3.good, t4.medium, t5.bad, t6.complaint
+    from
+    (((((select a.ID , a.COACH_NAME, count(b.LEARNER_NAME) learnerNum
+    from dss_coach_info a
+    left join dss_learner_info b on a.ID = b.COACH_ID
+    and b.CREATE_TIME BETWEEN #{beginTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+    GROUP BY a.COACH_NAME) AS t1
+    JOIN
+    (select a.ID ,a.COACH_NAME, count(b.LEARNER_NAME) pass
+    from dss_coach_info a
+    left join dss_learner_info b on a.ID = b.COACH_ID
+    and b.PROCESSING = 0 and b.CREATE_TIME BETWEEN #{beginTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+    GROUP BY a.COACH_NAME) as t2
+    on t1.ID=t2.ID )
+    JOIN
+    (select a.ID, a.COACH_NAME, count(b.TYPE) good from dss_coach_info a
+    left join dss_evaluate b on a.ID = b.COACH_ID
+    and b.TYPE =1 and b.CREATE_TIME BETWEEN #{beginTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+    GROUP BY a.COACH_NAME) AS t3
+    on t2.ID=t3.ID)
+    JOIN
+    (select a.ID, a.COACH_NAME, count(b.TYPE) medium from dss_coach_info a
+    left join dss_evaluate b on a.ID = b.COACH_ID
+    and b.TYPE =2 and b.CREATE_TIME BETWEEN #{beginTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+    GROUP BY a.COACH_NAME) AS t4
+    on t3.ID=t4.ID)
+    join
+    (select a.ID, a.COACH_NAME, count(b.TYPE) bad from dss_coach_info a
+    left join dss_evaluate b on a.ID = b.COACH_ID
+    and b.TYPE =3 and b.CREATE_TIME BETWEEN #{beginTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+    GROUP BY a.COACH_NAME) AS t5
+    on t4.ID=t5.ID)
+    join
+    (select a.ID, a.COACH_NAME, count(b.TYPE) complaint from dss_coach_info a
+    left join dss_evaluate b on a.ID = b.COACH_ID
+    and b.TYPE =0 and b.CREATE_TIME BETWEEN #{beginTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+    GROUP BY a.COACH_NAME) AS t6
+    on t5.ID = t6.ID
+  </select>
 </mapper>

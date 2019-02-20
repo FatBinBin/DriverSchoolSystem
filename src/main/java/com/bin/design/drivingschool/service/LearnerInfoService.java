@@ -11,7 +11,7 @@ import java.util.Map;
  * @version 2018/11/29
  * @since
  */
-public interface LearnerInfoService {
+public interface LearnerInfoService  {
 
 	PageBean<Map<String,Object>> selectAllLearner(Integer pageNum,Integer pageSize,String key);
 
@@ -29,7 +29,7 @@ public interface LearnerInfoService {
 
 	Map<String, Object> selectLearnerBySession();
 
-	Map<String, Object> selectLearnerByYear();
+	List selectLearnerByYear();
 
 	Map<String, Object> selectTitleById(Integer id);
 

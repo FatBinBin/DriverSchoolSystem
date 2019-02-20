@@ -37,6 +37,7 @@ public interface DssEvaluateMapper {
 
     List<Map<String, Object>> selectComplaintByLearner(@Param("learnerId")Integer learnerId);
 
+
     int updateByPrimaryKeySelective(DssEvaluate record);
 
     int updateByPrimaryKey(DssEvaluate record);

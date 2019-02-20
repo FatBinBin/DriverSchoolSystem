@@ -1,6 +1,7 @@
 package com.bin.design.drivingschool.mapper;
 
 import com.bin.design.drivingschool.entity.DssCoachInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -32,4 +33,7 @@ public interface DssCoachInfoMapper {
     int updateByPrimaryKeySelective(DssCoachInfo record);
 
     int updateByPrimaryKey(DssCoachInfo record);
+
+    List<Map<String, Object>> coachForm(@Param("beginTime") String beginTime,
+                                        @Param("endTime") String endTime);
 }

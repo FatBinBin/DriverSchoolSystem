@@ -17,7 +17,7 @@ public class DssAppointmentPractice {
 
     private String learnerPhone;
 
-    private Byte learnerSex;
+    private Boolean learnerSex;
 
     private Integer learnerAge;
 
@@ -25,12 +25,16 @@ public class DssAppointmentPractice {
 
     private Integer coachId;
 
-    private Byte course;
+    private Boolean course;
 
     private Date appointmentTime;
 
-    private Byte type;
+    private Boolean moment;
 
-    private Byte status;
+    private Boolean type;
+
+    private Boolean status;
+
+    private Boolean read;
 
 }

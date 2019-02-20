@@ -6,16 +6,17 @@ import com.bin.design.drivingschool.mapper.DssLearnerInfoMapper;
 import com.bin.design.drivingschool.service.LearnerInfoService;
 import com.bin.design.drivingschool.util.PageBean;
 import com.bin.design.drivingschool.util.SeasonUtils;
+import com.bin.design.drivingschool.util.YearUtils;
 import com.github.pagehelper.PageHelper;
 import org.apache.catalina.manager.util.SessionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.ls.LSInput;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.xml.crypto.Data;
+import java.text.ParseException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
  * @since
  */
 @Service
-public class LearnerInfoServiceImpl implements LearnerInfoService {
+public class LearnerInfoServiceImpl implements LearnerInfoService  {
 
 	@Autowired
 	DssLearnerInfoMapper dssLearnerInfoMapper;
@@ -74,12 +75,20 @@ public class LearnerInfoServiceImpl implements LearnerInfoService {
 	}
 
 	@Override
-	public Map<String, Object> selectLearnerByYear() {
-		Map<String, Object> result = new HashMap<>();
-		result.put("one", dssLearnerInfoMapper.selectLearnerBySession(SeasonUtils.getSeasonCharDate(0, null)[0],
-				SeasonUtils.getSeasonCharDate(0, null)[1]).get("num"));
-		result.put("two", dssLearnerInfoMapper.selectLearnerBySession("2018-01-01",
-				"2018-12-31").get("num"));
+	public List selectLearnerByYear(){
+		List result = new ArrayList();
+		Calendar date = Calendar.getInstance();
+		String year = String.valueOf(date.get(Calendar.YEAR));
+		List<String> yearList = new ArrayList<>();
+		try {
+		yearList= YearUtils.getMonthBetween("2018",year);
+		}catch (ParseException e){
+			e.printStackTrace();
+		}
+		for (int i = 0; i < yearList.size(); i++){
+			result.add(dssLearnerInfoMapper.selectLearnerBySession(yearList.get(i)+"-01-01",
+					yearList.get(i)+"-12-31").get("num"));
+		}
 		return result;
 	}
 

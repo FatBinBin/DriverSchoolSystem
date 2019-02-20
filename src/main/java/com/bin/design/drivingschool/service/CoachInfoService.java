@@ -28,4 +28,6 @@ public interface CoachInfoService {
 	void deleteById(Integer id);
 
 	void deleteBatchById(List list);
+
+	PageBean<Map<String,Object>> getCoachForm(Integer pageNum, Integer pageSize, Integer season);
 }

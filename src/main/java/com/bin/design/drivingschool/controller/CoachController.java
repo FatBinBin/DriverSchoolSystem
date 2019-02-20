@@ -32,7 +32,7 @@ public class CoachController {
 	public ResponseEntity<PageBean<Map<String,Object>>> getCoaches(@RequestParam(value = "pageNum") int pageNum,
 																   @RequestParam(value = "pageSize") int pageSize,
 																   @RequestParam(required = false,value = "key")
-																			   String key){
+																		   String key){
 		PageBean<Map<String,Object>> dssCoachInfos = coachInfoService.selectCoaches(pageNum,pageSize,key);
 		return new ResponseEntity<>(dssCoachInfos, HttpStatus.OK);
 	}
@@ -47,6 +47,15 @@ public class CoachController {
 	public ResponseEntity<List<Map<String, Object>>> getCoachIdAndName(){
 		List<Map<String, Object>> dssCoachInfo = coachInfoService.selectCoachIdAndName();
 		return new ResponseEntity<>(dssCoachInfo, HttpStatus.OK);
+	}
+
+	@GetMapping("/form")
+	public ResponseEntity<PageBean<Map<String,Object>>> getform(@RequestParam(value = "pageNum") int pageNum,
+																   @RequestParam(value = "pageSize") int pageSize,
+																@RequestParam(value = "season") int season
+																   ){
+		PageBean<Map<String,Object>> dssCoachForm = coachInfoService.getCoachForm(pageNum,pageSize, season);
+		return new ResponseEntity<>(dssCoachForm, HttpStatus.OK);
 	}
 
 }

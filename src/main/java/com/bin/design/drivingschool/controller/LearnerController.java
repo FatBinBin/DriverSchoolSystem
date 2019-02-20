@@ -64,8 +64,8 @@ public class LearnerController {
 	}
 
 	@GetMapping("/year")
-	public ResponseEntity<Map<String, Object>> getLearnerByYear(){
-		Map<String, Object> result = learnerInfoService.selectLearnerByYear();
+	public ResponseEntity<Object> getLearnerByYear(){
+		List result = learnerInfoService.selectLearnerByYear();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

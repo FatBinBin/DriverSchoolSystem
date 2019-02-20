@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bin.design.drivingschool.mapper.selectByKeyDssDrivingKnowledgeMapper">
+<mapper namespace="com.bin.design.drivingschool.mapper.DssDrivingKnowledgeMapper">
   <resultMap id="BaseResultMap" type="com.bin.design.drivingschool.entity.DssDrivingKnowledge">
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="KNOWLEDGE_TOPIC" jdbcType="VARCHAR" property="knowledgeTopic" />
