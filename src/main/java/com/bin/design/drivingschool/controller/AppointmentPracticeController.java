@@ -5,12 +5,14 @@ import com.bin.design.drivingschool.entity.DssAppointmentDriving;
 import com.bin.design.drivingschool.entity.DssAppointmentPractice;
 import com.bin.design.drivingschool.service.AppointmentPracticeService;
 import com.bin.design.drivingschool.util.PageBean;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +39,7 @@ public class AppointmentPracticeController {
     }
 
     @GetMapping("/practice")
-    public ResponseEntity<PageBean<DssAppointmentPractice>> getform(@RequestParam(value = "pageNum") int pageNum,
+    public ResponseEntity<PageBean<DssAppointmentPractice>> getForm(@RequestParam(value = "pageNum") int pageNum,
                                                                 @RequestParam(value = "pageSize") int pageSize,
                                                                 @RequestParam(value = "learnerId") int learnerId
     ){
@@ -55,6 +57,33 @@ public class AppointmentPracticeController {
     public ResponseEntity<Object> deleteAppointment(@RequestParam("id")int id) {
         appointmentPracticeService.deleteById(id);
         return new ResponseEntity<>("删除成功", HttpStatus.OK);
+    }
+
+    @GetMapping("/practice/all")
+    public ResponseEntity<PageBean<Map<String, Object>>> getAll(@RequestParam(value = "pageNum") int pageNum,
+                                                                    @RequestParam(value = "pageSize") int pageSize,
+                                                                @RequestParam(value = "key",required = false)String key){
+        PageBean<Map<String, Object>> dssCoachForm = appointmentPracticeService.selectAll(pageNum,pageSize,key);
+        return new ResponseEntity<>(dssCoachForm, HttpStatus.OK);
+    }
+
+    @GetMapping("/check")
+    public ResponseEntity<Object> check(@RequestParam("coachId") int coachId,
+                                        @RequestParam("appointmentTime") String appointmentTime,
+                                        @RequestParam("moment") Byte moment){
+        Map<String, Object> result = appointmentPracticeService.checkAppointment(coachId, appointmentTime, moment);
+        return  new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/coach")
+    public ResponseEntity<PageBean<Map<String, Object>>> coachAppointment(@RequestParam(value = "pageNum") int pageNum,
+                                                                @RequestParam(value = "pageSize") int pageSize,
+                                                                          @RequestParam("coachId") int coachId,
+                                                                          @RequestParam("appointmentTime") String appointmentTime,
+                                                                          @RequestParam("moment") Byte moment){
+        PageBean<Map<String, Object>> coachAppointment =
+                appointmentPracticeService.selectCoachAppointment(pageNum,pageSize,coachId,appointmentTime,moment);
+        return new ResponseEntity<>(coachAppointment, HttpStatus.OK);
     }
 
 }

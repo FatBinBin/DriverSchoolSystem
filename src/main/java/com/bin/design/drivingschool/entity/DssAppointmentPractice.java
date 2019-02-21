@@ -23,6 +23,8 @@ public class DssAppointmentPractice {
 
     private String learnerIdcar;
 
+    private Integer coachId;
+
     private String coachName;
 
     private Byte course;

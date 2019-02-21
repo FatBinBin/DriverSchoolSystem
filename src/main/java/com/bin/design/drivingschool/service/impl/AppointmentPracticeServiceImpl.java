@@ -5,6 +5,7 @@ import com.bin.design.drivingschool.mapper.DssAppointmentPracticeMapper;
 import com.bin.design.drivingschool.service.AppointmentPracticeService;
 import com.bin.design.drivingschool.util.PageBean;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,29 @@ public class AppointmentPracticeServiceImpl implements AppointmentPracticeServic
     }
 
     @Override
+    public PageBean<Map<String, Object>> selectCoachAppointment(Integer pageNum, Integer pageSize,
+                                                                Integer coachId, String appointmentTime, Byte moment) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageBean<>(dssAppointmentPracticeMapper.selectCoachAppointment(coachId, appointmentTime, moment));
+    }
+
+    @Override
     public int updataById(DssAppointmentPractice dssAppointmentPractice) {
         return dssAppointmentPracticeMapper.updateByPrimaryKeySelective(dssAppointmentPractice);
+    }
+
+    @Override
+    public PageBean<Map<String, Object>> selectAll(Integer pageNum, Integer pageSize, String key) {
+        PageHelper.startPage(pageNum, pageSize);
+        if (StringUtils.isEmpty(key)){
+        return new PageBean<>(dssAppointmentPracticeMapper.selectAll());
+        }
+        return new PageBean<>(dssAppointmentPracticeMapper.selectByName(key));
+    }
+
+    @Override
+    public Map<String, Object> checkAppointment(Integer coachId, String appointmentTime, Byte moment) {
+        return dssAppointmentPracticeMapper.checkAppointment(coachId, appointmentTime, moment);
     }
 
     @Override
