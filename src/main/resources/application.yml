@@ -1,13 +1,13 @@
 server:
   servlet:
-    context-path: /driving-school
+    context-path: /api/driving-school
   port: 8081
 
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/driving_school_system?useUnicode=true&tinyInt1isBit=false&characterEncoding=utf-8
     username: root
-    password: suntek
+    password: rootroot
     driver-class-name: com.mysql.jdbc.Driver
 
 ---
@@ -21,6 +21,9 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     serialization:
      INDENT_OUTPUT: true
+  servlet:
+    multipart:
+      enabled: true
 
 mybatis:
   typeAliasesPackage: com.bin.design.drivingschool.entity
