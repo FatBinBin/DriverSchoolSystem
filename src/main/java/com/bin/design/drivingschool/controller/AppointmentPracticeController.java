@@ -3,7 +3,9 @@ package com.bin.design.drivingschool.controller;
 
 import com.bin.design.drivingschool.entity.DssAppointmentDriving;
 import com.bin.design.drivingschool.entity.DssAppointmentPractice;
+import com.bin.design.drivingschool.entity.DssLearnerInfo;
 import com.bin.design.drivingschool.service.AppointmentPracticeService;
+import com.bin.design.drivingschool.service.LearnerInfoService;
 import com.bin.design.drivingschool.util.PageBean;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,8 @@ public class AppointmentPracticeController {
 
     @Autowired
     AppointmentPracticeService appointmentPracticeService;
+    @Autowired
+    LearnerInfoService learnerInfoService;
 
     @PostMapping("/practice")
     public ResponseEntity<Object> insertAppointment(@RequestBody DssAppointmentPractice dssAppointmentPractice) {
@@ -84,6 +88,19 @@ public class AppointmentPracticeController {
         PageBean<Map<String, Object>> coachAppointment =
                 appointmentPracticeService.selectCoachAppointment(pageNum,pageSize,coachId,appointmentTime,moment);
         return new ResponseEntity<>(coachAppointment, HttpStatus.OK);
+    }
+
+    @GetMapping("/checkIdentity")
+    public ResponseEntity<Object> checkIdentity(@RequestParam("learnerIdcar") String learnerIdcar){
+        Map<String, Object> result = new HashMap<>();
+        DssLearnerInfo  dssLearnerInfo =learnerInfoService.selectLearnerByIdcar(learnerIdcar);
+        if (dssLearnerInfo != null){
+            result.put("status", 1);
+            result.put("data", dssLearnerInfo);
+        }else {
+            result.put("status", 0);
+        }
+        return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
 }

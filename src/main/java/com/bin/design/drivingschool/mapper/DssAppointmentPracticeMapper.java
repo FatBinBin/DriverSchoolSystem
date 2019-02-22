@@ -23,7 +23,13 @@ public interface DssAppointmentPracticeMapper {
     List<DssAppointmentPractice> selectByLearnerId(Integer learnerId);
 
     List<DssAppointmentPractice> selectByLearnerIdAndTime(@Param("learnerId") Integer learnerId,
-                                                    @Param("appointmentTime") Date appointmentTime);
+                                                    @Param("appointmentTime") Date appointmentTime,
+                                                          @Param("type") Byte type);
+
+    List<DssAppointmentPractice> selectByLearnerNameAndPhoneAndTime(@Param("learnerName") String learnerName,
+                                                                    @Param("learnerPhone") String learnerPhone,
+                                                                    @Param("appointmentTime") Date appointmentTime,
+                                                                    @Param("type") Byte type);
 
     Map<String, Object> checkAppointment(@Param("coachId") Integer coachId, @Param("appointmentTime") String appointmentTime,
                                          @Param("moment") Byte moment);

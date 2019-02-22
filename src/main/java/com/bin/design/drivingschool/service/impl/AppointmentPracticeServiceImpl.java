@@ -58,13 +58,28 @@ public class AppointmentPracticeServiceImpl implements AppointmentPracticeServic
 
     @Override
     public int insert(DssAppointmentPractice dssAppointmentPractice) {
+        if (dssAppointmentPractice.getLearnerId() != null){
         int learnerId = dssAppointmentPractice.getLearnerId();
         Date appointmentTime = dssAppointmentPractice.getAppointmentTime();
-        List<DssAppointmentPractice> check = dssAppointmentPracticeMapper.selectByLearnerIdAndTime(learnerId,appointmentTime);
-        if (check != null && check.size() == 2){
+        Byte type = dssAppointmentPractice.getType();
+        List<DssAppointmentPractice> check = dssAppointmentPracticeMapper.selectByLearnerIdAndTime(learnerId,appointmentTime,type);
+        if (check != null && check.size() >= 2){
             return -1;
         }else if (check !=null && check.size() == 1 && check.get(0).getMoment() == dssAppointmentPractice.getMoment()){
             return -1;
+        }
+        }else if (dssAppointmentPractice.getLearnerPhone() != null){
+            String learnerName = dssAppointmentPractice.getLearnerName();
+            String learnerPhone = dssAppointmentPractice.getLearnerPhone();
+            Date appointmentTime = dssAppointmentPractice.getAppointmentTime();
+            Byte type = dssAppointmentPractice.getType();
+            List<DssAppointmentPractice> check1 = dssAppointmentPracticeMapper.selectByLearnerNameAndPhoneAndTime(
+                    learnerName, learnerPhone, appointmentTime, type);
+            if (check1 != null && check1.size() >= 2){
+                return -1;
+            }else if (check1 !=null && check1.size() == 1 && check1.get(0).getMoment() == dssAppointmentPractice.getMoment()){
+                return -1;
+            }
         }
         return dssAppointmentPracticeMapper.insertSelective(dssAppointmentPractice);
     }

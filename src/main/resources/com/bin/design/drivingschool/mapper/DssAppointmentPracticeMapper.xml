@@ -58,7 +58,15 @@
     <include refid="Base_Column_List" />
     from dss_appointment_practice
     where LEARNER_ID = #{learnerId,jdbcType=INTEGER} and APPOINTMENT_TIME = #{appointmentTime,jdbcType=TIMESTAMP}
-    and `TYPE` = 1
+    and `TYPE` = #{type,jdbcType=TINYINT}
+  </select>
+  <select id="selectByLearnerNameAndPhoneAndTime" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dss_appointment_practice
+    where LEARNER_NAME = #{learnerName,jdbcType=VARCHAR} and LEARNER_PHONE = #{learnerPhone,jdbcType=VARCHAR}
+    and APPOINTMENT_TIME = #{appointmentTime,jdbcType=TIMESTAMP}
+    and `TYPE` = #{type,jdbcType=TINYINT}
   </select>
   <select id="checkAppointment" resultType="map">
     SELECT COUNT(1) total from dss_appointment_practice
