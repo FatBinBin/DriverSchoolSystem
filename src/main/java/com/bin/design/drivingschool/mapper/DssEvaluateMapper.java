@@ -27,7 +27,15 @@ public interface DssEvaluateMapper {
 
     List<Map<String, Object>> selectAll();
 
+    List<Map<String, Object>> selectAllEvaluate();
+
+    List<Map<String, Object>> selectAllComplaint();
+
     List<Map<String, Object>> selectAllByKey(String key);
+
+    List<Map<String, Object>> selectAllEvaluateByKey(String key);
+
+    List<Map<String, Object>> selectAlComplaintByKey(String key);
 
     List<Map<String, Object>> selectByOrderCount();
 

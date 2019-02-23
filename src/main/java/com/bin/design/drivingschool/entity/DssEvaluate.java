@@ -18,4 +18,8 @@ public class DssEvaluate {
 
     private Integer leanerId;
 
+    private Byte status;
+
+    private String sloveContent;
+
 }

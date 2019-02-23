@@ -29,6 +29,11 @@ public class EvaluateServiceImpl implements EvaluateService {
 	}
 
 	@Override
+	public int upateById(DssEvaluate dssEvaluate) {
+		return dssEvaluateMapper.updateByPrimaryKeySelective(dssEvaluate);
+	}
+
+	@Override
 	public void deleteBatchById(List list) {
 		dssEvaluateMapper.deleteBatchByPrimaryKey(list);
 	}
@@ -53,6 +58,24 @@ public class EvaluateServiceImpl implements EvaluateService {
 	public PageBean<Map<String, Object>> selectEvalutesByLearner(Integer pageNum, Integer pageSize, Integer learnerId) {
 		PageHelper.startPage(pageNum,pageSize);
 		return new PageBean<>(dssEvaluateMapper.selectByLearner(learnerId));
+	}
+
+	@Override
+	public PageBean<Map<String, Object>> selectAllEvalutes(Integer pageNum, Integer pageSize,  String key) {
+		PageHelper.startPage(pageNum,pageSize);
+		if (StringUtils.isNotEmpty(key)){
+			return new PageBean<>(dssEvaluateMapper.selectAllEvaluateByKey(key));
+		}
+		return new PageBean<>(dssEvaluateMapper.selectAllEvaluate());
+	}
+
+	@Override
+	public PageBean<Map<String, Object>> selectComplaint(Integer pageNum, Integer pageSize, String key) {
+		PageHelper.startPage(pageNum,pageSize);
+		if (StringUtils.isNotEmpty(key)){
+			return new PageBean<>(dssEvaluateMapper.selectAlComplaintByKey(key));
+		}
+		return new PageBean<>(dssEvaluateMapper.selectAllComplaint());
 	}
 
 	@Override

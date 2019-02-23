@@ -6,10 +6,12 @@
         <result column="COACH_ID" jdbcType="INTEGER" property="coachId"/>
         <result column="CONTENT" jdbcType="VARCHAR" property="content"/>
         <result column="TYPE" jdbcType="TINYINT" property="type"/>
+        <result column="STATUS" jdbcType="TINYINT" property="status"/>
+        <result column="SLOVE_CONTENT" jdbcType="VARCHAR" property="sloveContent"/>
         <result column="LEANER_ID" jdbcType="INTEGER" property="leanerId"/>
     </resultMap>
     <sql id="Base_Column_List">
-    ID, COACH_ID, CONTENT, TYPE, LEANER_ID
+    ID, COACH_ID, CONTENT, TYPE, LEANER_ID, STATUS, SLOVE_CONTENT
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -31,6 +33,26 @@
     left join dss_learner_info dl on dl.ID = de.LEANER_ID
 		LEFT JOIN dss_coach_info dc on dc.ID = de.COACH_ID
   </select>
+    <select id="selectAllEvaluate" resultType="map">
+    select
+    de.ID id, de.COACH_ID coachId, dc.COACH_NAME coachName,
+    de.LEANER_ID learnerId, dl.LEARNER_NAME learnerName,
+    de.CONTENT content, de.TYPE type
+    from dss_evaluate de
+    left join dss_learner_info dl on dl.ID = de.LEANER_ID
+		LEFT JOIN dss_coach_info dc on dc.ID = de.COACH_ID
+		where de.TYPE != 0
+  </select>
+    <select id="selectAllComplaint" resultType="map">
+    select
+    de.ID id, de.COACH_ID coachId, dc.COACH_NAME coachName,
+    de.LEANER_ID learnerId, dl.LEARNER_NAME learnerName,
+    de.CONTENT content, de.TYPE type, de.STATUS status, de.SLOVE_CONTENT sloveContent
+    from dss_evaluate de
+    left join dss_learner_info dl on dl.ID = de.LEANER_ID
+		LEFT JOIN dss_coach_info dc on dc.ID = de.COACH_ID
+		where de.TYPE =0
+  </select>
     <select id="selectAllByKey" resultType="map">
     select
     de.ID id, de.COACH_ID coachId, dc.COACH_NAME coachName, de.LEANER_ID learnerId, dl.LEARNER_NAME learnerName,  de.CONTENT content, de.TYPE type
@@ -39,6 +61,27 @@
 	LEFT JOIN dss_coach_info dc on dc.ID = de.COACH_ID
 	where dl.LEARNER_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
     or dc.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+  </select>
+    <select id="selectAllEvaluateByKey" resultType="map">
+    select
+    de.ID id, de.COACH_ID coachId, dc.COACH_NAME coachName, de.LEANER_ID learnerId, dl.LEARNER_NAME learnerName,  de.CONTENT content, de.TYPE type
+    from dss_evaluate de
+    left join dss_learner_info dl on dl.ID = de.LEANER_ID
+	LEFT JOIN dss_coach_info dc on dc.ID = de.COACH_ID
+	where dl.LEARNER_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    or dc.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%') and de.TYPE != 0
+  </select>
+    <select id="selectAlComplaintByKey" resultType="map">
+    select
+    de.ID id, de.COACH_ID coachId, dc.COACH_NAME coachName,
+     de.LEANER_ID learnerId, dl.LEARNER_NAME learnerName,
+     de.CONTENT content, de.TYPE type, de.STATUS status, de.SLOVE_CONTENT sloveContent
+    from dss_evaluate de
+    left join dss_learner_info dl on dl.ID = de.LEANER_ID
+	LEFT JOIN dss_coach_info dc on dc.ID = de.COACH_ID
+	where dl.LEARNER_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    or dc.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    and de.TYPE = 0
   </select>
     <select id="selectByOrderCount" resultType="map">
     select  count(a.ID) NUM, a.*, b.*  from dss_coach_info a
@@ -60,7 +103,8 @@
   </select>
     <select id="selectComplaintByLearner" resultType="map">
     SELECT e.LEANER_ID learnerId, e.COACH_ID coachId, e.ID id, e.CONTENT content,
-     e.CREATE_TIME createTime, e.UPDATE_TIME updateTime, c.COACH_NAME coachName, TYPE type
+     e.CREATE_TIME createTime, e.UPDATE_TIME updateTime, c.COACH_NAME coachName,
+     e.STATUS status, e.SLOVE_CONTENT sloveContent, TYPE type
      FROM dss_evaluate e LEFT JOIN dss_coach_info c ON e.COACH_ID = c.ID
      WHERE LEANER_ID = #{learnerId,jdbcType=INTEGER} AND e.TYPE = 0
   </select>
@@ -131,11 +175,17 @@
             <if test="content != null">
                 CONTENT = #{content,jdbcType=VARCHAR},
             </if>
-            <if test="evaluate != null">
-                EVALUATE = #{evaluate,jdbcType=BIT},
+            <if test="type != null">
+                TYPE = #{type,jdbcType=TINYINT},
             </if>
             <if test="leanerId != null">
                 LEANER_ID = #{leanerId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="sloveContent != null">
+                SLOVE_CONTENT = #{sloveContent,jdbcType=VARCHAR},
             </if>
         </set>
         where ID = #{id,jdbcType=INTEGER}

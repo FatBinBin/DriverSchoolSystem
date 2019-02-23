@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.ws.Response;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,38 @@ public class EvaluateController {
         PageBean<Map<String, Object>> dssEvaluate = evaluateService.selectEvalutes(pageNum, pageSize, coachId, key);
         return new ResponseEntity<>(dssEvaluate, HttpStatus.OK);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<PageBean<Map<String, Object>>> getAllEvaluate(@RequestParam(value = "pageNum") int pageNum,
+                                                                    @RequestParam(value = "pageSize") int pageSize,
+                                                                    @RequestParam(value = "key", required = false)
+                                                                            String key) {
+        PageBean<Map<String, Object>> dssEvaluate = evaluateService.selectAllEvalutes(pageNum, pageSize, key);
+        return new ResponseEntity<>(dssEvaluate, HttpStatus.OK);
+    }
+
+    @GetMapping("/complaints")
+    public ResponseEntity<PageBean<Map<String, Object>>> getAllComplaint(@RequestParam(value = "pageNum") int pageNum,
+                                                                    @RequestParam(value = "pageSize") int pageSize,
+                                                                    @RequestParam(value = "key", required = false)
+                                                                            String key) {
+        PageBean<Map<String, Object>> dssEvaluate = evaluateService.selectComplaint(pageNum, pageSize, key);
+        return new ResponseEntity<>(dssEvaluate, HttpStatus.OK);
+    }
+
+    @PutMapping("/complaints")
+    public ResponseEntity<Object> updateComplaintStatus(@RequestBody DssEvaluate dssEvaluate){
+        Map<String, Object> result = new HashMap<>();
+        int count = evaluateService.upateById(dssEvaluate);
+        if (count > 0 ){
+            result.put("status", 1);
+            result.put("message", "处理成功");
+        }else {
+            result.put("status", 0);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 
     @PostMapping("")
     public ResponseEntity<Object> evaluate(@RequestBody DssEvaluate dssEvaluate){

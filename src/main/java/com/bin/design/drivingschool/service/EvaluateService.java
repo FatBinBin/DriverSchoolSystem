@@ -19,6 +19,10 @@ public interface EvaluateService {
 
 	PageBean<Map<String,Object>> selectEvalutes(Integer pageNum, Integer pageSize, Integer coachId, String key);
 
+	PageBean<Map<String,Object>> selectAllEvalutes(Integer pageNum, Integer pageSize, String key);
+
+	PageBean<Map<String,Object>> selectComplaint(Integer pageNum, Integer pageSize, String key);
+
 	PageBean<Map<String,Object>> selectEvalutesByLearner(Integer pageNum, Integer pageSize, Integer learnerId);
 
 	PageBean<Map<String,Object>> selectComplaintByLearner(Integer pageNum, Integer pageSize, Integer learnerId);
@@ -30,5 +34,7 @@ public interface EvaluateService {
 	void deleteById(Integer id);
 
 	void deleteBatchById(List list);
+
+	int upateById(DssEvaluate dssEvaluate);
 
 }
