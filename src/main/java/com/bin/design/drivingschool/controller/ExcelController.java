@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -66,8 +68,9 @@ public class ExcelController {
     }
 
     @PostMapping("")
-    public String importData(@RequestParam MultipartFile file)
+    public Map<String, Object> importData(@RequestParam MultipartFile file)
     {
+        Map<String, Object> result = new HashMap<>();
         Workbook wb = null;
         List<DssPapers> dssPapersList = new ArrayList<>();
         try
@@ -82,8 +85,9 @@ public class ExcelController {
         catch (IOException e)
         {
             e.printStackTrace();
-
-            return null;
+            result.put("status", 0);
+            result.put("message","文件错误");
+            return result;
         }
         try
         {
@@ -119,15 +123,21 @@ public class ExcelController {
         catch (NullPointerException e)
         {
 //            e.printStackTrace();
-            return "格式错误";
+            result.put("status", 0);
+            result.put("message","内容格式错误");
+            return result;
         }catch (Exception e){
-            return "文件错误";
+            result.put("status", 0);
+            result.put("message","文件类型错误");
+            return result;
         }
         for (DssPapers dssPapers : dssPapersList){
             System.out.println(dssPapers.getA() + " " + dssPapers.getB() + " " + dssPapers.getC()
             + " " + dssPapers.getD() + " " + dssPapers.getQuestion() + " " + dssPapers.getAnswer());
         }
-        return "批量导入成功";
+        result.put("status", 1);
+        result.put("message","批量导入成功");
+        return result;
     }
 
 
