@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +59,12 @@ public class KnowledgeController {
 	@DeleteMapping("")
 	public ResponseEntity<Object> deleteKnowledge(@RequestParam("id") int id) {
 		knowledgeService.delete(id);
+		return new ResponseEntity<>("删除成功", HttpStatus.OK);
+	}
+
+	@DeleteMapping("/batchKnowledge")
+	public ResponseEntity<Object> batchKnowledge(@RequestParam("id") List list) {
+		knowledgeService.deleteBatch(list);
 		return new ResponseEntity<>("删除成功", HttpStatus.OK);
 	}
 

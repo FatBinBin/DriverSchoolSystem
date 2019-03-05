@@ -76,7 +76,7 @@ public class KnowledgeServiceImpl implements KnowledgeService {
 
 	@Override
 	public void deleteBatch(List list) {
-
+		dssDrivingKnowledgeMapper.deleteBatchByPrimaryKey(list);
 	}
 
 	@Override

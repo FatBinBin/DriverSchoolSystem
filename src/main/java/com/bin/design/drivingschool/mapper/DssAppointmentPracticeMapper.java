@@ -12,6 +12,8 @@ public interface DssAppointmentPracticeMapper {
 
     int deleteByPrimaryKey(Integer id);
 
+    int deleteBatchByPrimaryKey(List list);
+
     int insert(DssAppointmentPractice record);
 
     int insertSelective(DssAppointmentPractice record);

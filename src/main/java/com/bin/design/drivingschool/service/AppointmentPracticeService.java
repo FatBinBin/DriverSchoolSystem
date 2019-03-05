@@ -5,6 +5,7 @@ import com.bin.design.drivingschool.util.PageBean;
 
 import javax.crypto.interfaces.PBEKey;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,4 +25,6 @@ public interface AppointmentPracticeService {
     int updataById(DssAppointmentPractice dssAppointmentPractice);
 
     int deleteById(Integer id);
+
+    void deleteBatchById(List list);
 }

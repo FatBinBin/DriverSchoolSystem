@@ -24,4 +24,6 @@ public class DssCoachInfo {
     private String coachImg;
 
     private Integer orderCount;
+
+    private Integer teachYear;
 }

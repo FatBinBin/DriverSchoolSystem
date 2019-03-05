@@ -9,6 +9,8 @@ public interface DssDrivingKnowledgeMapper {
 
     int deleteByPrimaryKey(Integer id);
 
+    int deleteBatchByPrimaryKey(List list);
+
     int insert(DssDrivingKnowledge record);
 
     int insertSelective(DssDrivingKnowledge record);

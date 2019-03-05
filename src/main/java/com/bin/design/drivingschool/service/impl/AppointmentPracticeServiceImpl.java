@@ -37,6 +37,11 @@ public class AppointmentPracticeServiceImpl implements AppointmentPracticeServic
     }
 
     @Override
+    public void deleteBatchById(List list) {
+        dssAppointmentPracticeMapper.deleteBatchByPrimaryKey(list);
+    }
+
+    @Override
     public PageBean<Map<String, Object>> selectAll(Integer pageNum, Integer pageSize, String key) {
         PageHelper.startPage(pageNum, pageSize);
         if (StringUtils.isEmpty(key)){

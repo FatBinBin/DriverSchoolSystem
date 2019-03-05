@@ -75,7 +75,7 @@
   </select>
   <select id="selectCoachAppointment" resultType="map">
     SELECT COACH_NAME coachName, LEARNER_NAME, COURSE from dss_appointment_practice
-    WHERE COACH_ID = #{coachId,jdbcType=INTEGER} and APPOINTMENT_TIME = #{appointmentTime}
+    WHERE COACH_ID = #{coachId,jdbcType=INTEGER} and APPOINTMENT_TIME = #{appointmentTime} and MOMENT = #{moment,jdbcType=TINYINT}
     and  `STATUS` = 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -85,6 +85,13 @@
     -->
     delete from dss_appointment_practice
     where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dss_appointment_practice
+    where ID in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item,jdbcType=INTEGER}
+    </foreach>
   </delete>
   <insert id="insert" parameterType="com.bin.design.drivingschool.entity.DssAppointmentPractice" >
     <!--

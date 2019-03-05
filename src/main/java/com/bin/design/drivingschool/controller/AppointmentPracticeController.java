@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -62,6 +63,13 @@ public class AppointmentPracticeController {
         appointmentPracticeService.deleteById(id);
         return new ResponseEntity<>("删除成功", HttpStatus.OK);
     }
+
+    @DeleteMapping("/practice/batch")
+    public ResponseEntity<Object> deleteCoaches(@RequestParam("id") List list) {
+        appointmentPracticeService.deleteBatchById(list);
+        return new ResponseEntity<>("删除成功", HttpStatus.OK);
+    }
+
 
     @GetMapping("/practice/all")
     public ResponseEntity<PageBean<Map<String, Object>>> getAll(@RequestParam(value = "pageNum") int pageNum,
