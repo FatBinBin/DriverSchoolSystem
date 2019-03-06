@@ -20,35 +20,57 @@
   <sql id="Base_Column_List">
     ID, COACH_NAME, COACH_SEX,COACH_IDCAR, COACH_YEAR, COACH_PHONE, COACH_INTRO, COACH_IMG, ORDER_COUNT, TEACH_YEAR
   </sql>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from dss_coach_info
+  <select id="selectAll" resultType="map">
+    <!--select-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--from dss_coach_info-->
+    select ci.ID id, ci.COACH_IMG coachImg, ci.COACH_NAME coachName, ci.COACH_SEX coachSex, ci.COACH_PHONE coachPhone,
+    ci.COACH_IDCAR coachIdcar,ci.COACH_INTRO coachIntro, ci.COACH_YEAR coachYear, ci.TEACH_YEAR teachYear,
+    count(li.ID) num
+    from dss_coach_info ci
+    left join dss_learner_info li on ci.ID = li.COACH_ID
+    group by ci.ID
   </select>
-  <select id="selectByKey" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from dss_coach_info
-    where COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
-    or COACH_IDCAR like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
-    or COACH_PHONE like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+  <select id="selectByKey" resultType="map">
+    <!--select-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--from dss_coach_info-->
+    select ci.ID id, ci.COACH_IMG coachImg, ci.COACH_NAME coachName, ci.COACH_SEX coachSex, ci.COACH_PHONE coachPhone,
+    ci.COACH_IDCAR coachIdcar,ci.COACH_INTRO coachIntro, ci.COACH_YEAR coachYear, ci.TEACH_YEAR teachYear,
+    count(li.ID) num
+    from dss_coach_info ci
+    left join dss_learner_info li on ci.ID = li.COACH_ID
+    where ci.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    or ci.COACH_IDCAR like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    or ci.COACH_PHONE like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    group by ci.ID
   </select>
-  <select id="selectByName" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from dss_coach_info
-    where COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+  <select id="selectByName" resultType="map">
+    <!--select-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--from dss_coach_info-->
+    select ci.ID id, ci.COACH_IMG coachImg, ci.COACH_NAME coachName, ci.COACH_SEX coachSex, ci.COACH_PHONE coachPhone,
+    ci.COACH_IDCAR coachIdcar,ci.COACH_INTRO coachIntro, ci.COACH_YEAR coachYear, ci.TEACH_YEAR teachYear,
+    count(li.ID) num
+    from dss_coach_info ci
+    left join dss_learner_info li on ci.ID = li.COACH_ID
+    where ci.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
   </select>
   <select id="selectIdAndName"  resultType="map">
     select
     ID id, COACH_NAME coachName
     from dss_coach_info
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from dss_coach_info
-    where ID = #{id,jdbcType=INTEGER}
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="map">
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from dss_coach_info-->
+    select ci.ID id, ci.COACH_IMG coachImg, ci.COACH_NAME coachName, ci.COACH_SEX coachSex, ci.COACH_PHONE coachPhone,
+    ci.COACH_IDCAR coachIdcar,ci.COACH_INTRO coachIntro, ci.COACH_YEAR coachYear, ci.TEACH_YEAR teachYear,
+    count(li.ID) num
+    from dss_coach_info ci
+    left join dss_learner_info li on ci.ID = li.COACH_ID
+    where ci.ID = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dss_coach_info

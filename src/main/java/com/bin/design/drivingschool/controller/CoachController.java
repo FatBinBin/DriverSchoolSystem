@@ -38,8 +38,8 @@ public class CoachController {
 	}
 
 	@GetMapping("/info")
-	public ResponseEntity<DssCoachInfo> getCoach(@RequestParam("id") int id){
-		DssCoachInfo dssCoachInfo = coachInfoService.selectCoachById(id);
+	public ResponseEntity<Object> getCoach(@RequestParam("id") int id){
+		Map<String, Object> dssCoachInfo = coachInfoService.selectCoachById(id);
 		return new ResponseEntity<>(dssCoachInfo, HttpStatus.OK);
 	}
 

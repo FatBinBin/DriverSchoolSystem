@@ -28,7 +28,7 @@ public interface DssCoachInfoMapper {
 
     List<Map<String, Object>> selectIdAndName();
 
-    DssCoachInfo selectByPrimaryKey(Integer id);
+    Map<String, Object> selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(DssCoachInfo record);
 
