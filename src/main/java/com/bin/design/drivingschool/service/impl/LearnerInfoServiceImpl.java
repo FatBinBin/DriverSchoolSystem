@@ -10,6 +10,7 @@ import com.bin.design.drivingschool.util.YearUtils;
 import com.github.pagehelper.PageHelper;
 import org.apache.catalina.manager.util.SessionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.ls.LSInput;
@@ -139,6 +140,17 @@ public class LearnerInfoServiceImpl implements LearnerInfoService  {
 	@Override
 	public DssLearnerInfo selectByLearnerPhone(DssLearnerInfo dssLearnerInfo) {
 		return dssLearnerInfoMapper.findByLearnerPhone(dssLearnerInfo.getLearnerPhone());
+	}
+
+	@Override
+	public Map<String, Object> findPasswordById(Integer id) {
+		return dssLearnerInfoMapper.findPasswordById(id);
+	}
+
+	@Override
+	public Map<String, Object> findPassWord(Map<String, Object> info) {
+		return dssLearnerInfoMapper.findPassword(info.get("learnerName").toString()
+				,info.get("learnerPhone").toString(),info.get("learnerIdcar").toString());
 	}
 
 	@Override

@@ -96,5 +96,31 @@ public class LearnerController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
+	@PostMapping("/findPassword")
+	public ResponseEntity<Object> find(@RequestBody Map<String, Object> map){
+		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> password = learnerInfoService.findPassWord(map);
+		if (password != null){
+			result.put("status", 1);
+			result.put("data", password);
+		}else {
+			result.put("status", 0);
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/findPassword")
+	public ResponseEntity<Object> find(@RequestParam("id") int id){
+		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> password = learnerInfoService.findPasswordById(id);
+		if (password != null){
+			result.put("status", 1);
+			result.put("data", password);
+		}else {
+			result.put("status", 0);
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 
 }

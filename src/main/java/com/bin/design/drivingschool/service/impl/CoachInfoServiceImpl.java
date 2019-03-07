@@ -91,6 +91,11 @@ public class CoachInfoServiceImpl implements CoachInfoService {
     }
 
     @Override
+    public List<Map<String, Object>> countLearnerNum() {
+        return dssCoachInfoMapper.countLearnerNum();
+    }
+
+    @Override
     public PageBean<Map<String, Object>> selectLearnerForCoach(Integer pageNum, Integer pageSize, Integer id) {
         PageHelper.startPage(pageNum, pageSize);
         return new PageBean<>(dssLearnerInfoMapper.selectLearnerForCoach(id));

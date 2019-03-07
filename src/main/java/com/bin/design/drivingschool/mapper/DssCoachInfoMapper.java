@@ -30,6 +30,8 @@ public interface DssCoachInfoMapper {
 
     Map<String, Object> selectByPrimaryKey(Integer id);
 
+    List<Map<String, Object>> countLearnerNum();
+
     int updateByPrimaryKeySelective(DssCoachInfo record);
 
     int updateByPrimaryKey(DssCoachInfo record);

@@ -72,6 +72,14 @@
     left join dss_learner_info li on ci.ID = li.COACH_ID
     where ci.ID = #{id,jdbcType=INTEGER}
   </select>
+  <select id="countLearnerNum" resultType="map">
+    select ci.ID id, ci.COACH_IMG coachImg, ci.COACH_NAME coachName, ci.COACH_SEX coachSex, ci.COACH_PHONE coachPhone,
+    ci.COACH_IDCAR coachIdcar,ci.COACH_INTRO coachIntro, ci.COACH_YEAR coachYear, ci.TEACH_YEAR teachYear,
+    count(li.ID) num
+    from dss_coach_info ci
+    left join dss_learner_info li on ci.ID = li.COACH_ID
+    group by ci.ID  ORDER BY num DESC LIMIT 5
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dss_coach_info
     where ID = #{id,jdbcType=INTEGER}

@@ -21,6 +21,8 @@ public interface CoachInfoService {
 
 	PageBean<Map<String,Object>> selectLearnerForCoach(Integer pageNum,Integer pageSize,Integer id);
 
+	List<Map<String, Object>> countLearnerNum();
+
 	void updateById(DssCoachInfo dssCoachInfo);
 
 	void insert(DssCoachInfo dssCoachInfo);

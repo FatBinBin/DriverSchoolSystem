@@ -58,4 +58,10 @@ public class CoachController {
 		return new ResponseEntity<>(dssCoachForm, HttpStatus.OK);
 	}
 
+	@GetMapping("/count")
+	public ResponseEntity<Object> countLearner(){
+		List<Map<String, Object>> dssCoachInfo = coachInfoService.countLearnerNum();
+		return new ResponseEntity<>(dssCoachInfo, HttpStatus.OK);
+	}
+
 }

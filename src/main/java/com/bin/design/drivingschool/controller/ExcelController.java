@@ -42,7 +42,7 @@ public class ExcelController {
         try {
             //获取文件的路径
             //String excelPath = request.getSession().getServletContext().getRealPath("/template/"+"excel.xlsx");
-            String excelPath = getClass().getResource("/template/" + "excel.xls").getPath();
+            String excelPath = getClass().getResource("/template/" + "uploadTemplate.xlsx").getPath();
             if(StringUtils.isEmpty(excelPath)){
                 return;
             }
@@ -53,7 +53,7 @@ public class ExcelController {
             response.reset();
             response.setContentType("bin");
             response.addHeader("Content-Disposition",
-                    "attachment;filename=" + URLEncoder.encode("example.xlsx", "UTF-8"));
+                    "attachment;filename=" + URLEncoder.encode("uploadTemplate.xlsx", "UTF-8"));
             // 循环取出流中的数据
             byte[] b = new byte[200];
             int len;

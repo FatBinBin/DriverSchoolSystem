@@ -33,6 +33,10 @@ public interface LearnerInfoService  {
 
 	Map<String, Object> selectTitleById(Integer id);
 
+	Map<String, Object> findPassWord(Map<String, Object> info);
+
+	Map<String, Object> findPasswordById(Integer id);
+
 	void updateById(DssLearnerInfo dssLearnerInfo);
 
 	int updateTitleById(Integer title, Integer id);

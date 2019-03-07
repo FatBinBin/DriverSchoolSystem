@@ -44,7 +44,12 @@ public interface DssLearnerInfoMapper {
 
     Map<String, Object> selectLearnerBySession(@Param("begin")String begin, @Param("end")String end);
 
+    Map<String, Object> findPassword(@Param("learnerName")String learnerName, @Param("learnerPhone")String learnerPhone,
+                                    @Param("learnerIdcar")String learnerIdcar);
+
 //    DssLearnerInfo findLearnerByPhone(String learnerPhone);
+
+    Map<String, Object> findPasswordById(Integer id);
     /**
      *
      * @param id

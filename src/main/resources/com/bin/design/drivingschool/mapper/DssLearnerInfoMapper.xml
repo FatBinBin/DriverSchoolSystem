@@ -84,6 +84,16 @@
     from dss_learner_info
     WHERE CREATE_TIME BETWEEN #{begin,jdbcType=VARCHAR} and #{end,jdbcType=VARCHAR}
   </select>
+  <select id="findPassword" resultType="map">
+    select LEARNER_PASSWORD learnerPassword from dss_learner_info
+    WHERE LEARNER_NAME = #{learnerName,jdbcType=VARCHAR}
+    and LEARNER_PHONE = #{learnerPhone,jdbcType=VARCHAR}
+    and LEARNER_IDCAR = #{learnerIdcar,jdbcType=INTEGER}
+  </select>
+  <select id="findPasswordById" parameterType="java.lang.Integer" resultType="map">
+    select LEARNER_PASSWORD learnerPassword from dss_learner_info
+    WHERE ID = #{id,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dss_learner_info
     where ID = #{id,jdbcType=INTEGER}
