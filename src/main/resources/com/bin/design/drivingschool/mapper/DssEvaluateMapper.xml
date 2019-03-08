@@ -68,8 +68,8 @@
     from dss_evaluate de
     left join dss_learner_info dl on dl.ID = de.LEANER_ID
 	LEFT JOIN dss_coach_info dc on dc.ID = de.COACH_ID
-	where de.TYPE != 0 and dl.LEARNER_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
-    or dc.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+	where de.TYPE != 0 and (dl.LEARNER_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    or dc.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%'))
   </select>
     <select id="selectAlComplaintByKey" resultType="map">
     select
@@ -79,8 +79,8 @@
     from dss_evaluate de
     left join dss_learner_info dl on dl.ID = de.LEANER_ID
 	LEFT JOIN dss_coach_info dc on dc.ID = de.COACH_ID
-	where de.TYPE = 0 and dl.LEARNER_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
-    or dc.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+	where de.TYPE = 0 and (dl.LEARNER_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%')
+    or dc.COACH_NAME like CONCAT(CONCAT('%',#{key,jdbcType=VARCHAR}),'%'))
   </select>
     <select id="selectByOrderCount" resultType="map">
     select  count(a.ID) NUM, a.*, b.*  from dss_coach_info a

@@ -40,7 +40,7 @@ public interface DssLearnerInfoMapper {
 
     DssLearnerInfo findByLearnerIdcar(String learnerIdcar);
 
-    List<Map<String, Object>> selectAllProcessing();
+    List<Map<String, Object>> selectAllProcessing(@Param("beginTime")String begin, @Param("endTime")String end);
 
     Map<String, Object> selectLearnerBySession(@Param("begin")String begin, @Param("end")String end);
 

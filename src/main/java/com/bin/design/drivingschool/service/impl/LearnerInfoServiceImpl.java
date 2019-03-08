@@ -114,7 +114,9 @@ public class LearnerInfoServiceImpl implements LearnerInfoService  {
 
 	@Override
 	public Map<String, Object> selectAllProsessing() {
-		List<Map<String, Object>> processed = dssLearnerInfoMapper.selectAllProcessing();
+		String beginTime = SeasonUtils.getSeasonCharDate(0, null)[0] + " 00:00:00";
+		String endTime = SeasonUtils.getSeasonCharDate(0, null)[1] + " 23:59:59";
+		List<Map<String, Object>> processed = dssLearnerInfoMapper.selectAllProcessing(beginTime, endTime);
 		Map<String, List<Map<String, Object>>> a = processed.stream()
 				.collect(Collectors.groupingBy(o->o.get("processing").toString()));
 		Map<String, Object> result = new HashMap<>();
