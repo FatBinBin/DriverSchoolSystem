@@ -5,6 +5,7 @@ import com.bin.design.drivingschool.entity.DssKnowledgeComment;
 import com.bin.design.drivingschool.entity.DssKnowledgeReply;
 import com.bin.design.drivingschool.service.KnowledgeService;
 import com.bin.design.drivingschool.util.PageBean;
+import com.bin.design.drivingschool.util.SensitivewordFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author huangyubin
@@ -79,14 +81,26 @@ public class KnowledgeController {
 	@PostMapping("/comment")
 	public ResponseEntity<Object> addComment(@RequestBody DssKnowledgeComment dssKnowledgeComment){
 		Map<String, Object> result = new HashMap<>();
-		int count = knowledgeService.insertComment(dssKnowledgeComment);
-		if (count > 0){
-			result.put("message", "提交成功");
-			result.put("status", "1");
-			return new ResponseEntity<>(result, HttpStatus.OK);
+		SensitivewordFilter filter = new SensitivewordFilter();
+		String string = dssKnowledgeComment.getContent();
+		Set<String> set = filter.getSensitiveWord(string, 1);
+		int n = set.size();
+		log.debug("语句中包含敏感词的个数为：" + set.size() + "。包含：" + set);
+		System.out.println("语句中包含敏感词的个数为：" + set.size() + "。包含：" + set);
+		if (n > 0){
+			result.put("message", "非法提问");
+			result.put("status", "0");
+		}else {
+			int count = knowledgeService.insertComment(dssKnowledgeComment);
+			if (count > 0){
+				result.put("message", "提交成功");
+				result.put("status", "1");
+				return new ResponseEntity<>(result, HttpStatus.OK);
+			}
+			result.put("message", "提交失败");
+			result.put("status", "0");
 		}
-		result.put("message", "提交失败");
-		result.put("status", "0");
+
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

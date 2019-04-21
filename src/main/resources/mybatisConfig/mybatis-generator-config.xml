@@ -63,7 +63,7 @@
         <!--enableUpdateByExample="false"/>-->
         <!--<table tableName="dss_knowledge_comment" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
         <!--enableUpdateByExample="false"/>-->
-        <table tableName="dss_appointment_practice" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false"/>
+        <!--<table tableName="dss_appointment_practice" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false"/>-->
     </context>
 </generatorConfiguration>
